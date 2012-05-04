@@ -1,4 +1,4 @@
-## What is this?
+## Introduction
 这是一个通知中心插件，用于在通知中心显示日期。这个插件可以让你滑下通知中心就能方便地查看公历农历日期。
 
 ## Screenshots
@@ -28,4 +28,8 @@
   - 运行编译打包安装命令：
 <pre><code>make package install</code></pre>
 
+## Lincese
+本项目使用GPL v3.0协议发布
+
 ## Have fun! Go fork it!
+
