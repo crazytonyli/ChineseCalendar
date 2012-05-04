@@ -1,0 +1,10 @@
+{
+	entry = {
+		bundle = "LunarCalendarWidgetPreference";
+		cell = PSLinkCell;
+		detail = LCWPListController;
+		icon = "/Library/WeeLoader/Plugins/LunarCalendarWidget.bundle/Icon-Small@2x.png";
+		isController = 1;
+		label = "\U519c\U5386 Widget";
+	};
+}

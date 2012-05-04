@@ -1,0 +1,379 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4A2A954615536D7000526963 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2A954515536D7000526963 /* UIKit.framework */; };
+		4A2A954815536D7000526963 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2A954715536D7000526963 /* Foundation.framework */; };
+		4A2A954A15536D7000526963 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2A954915536D7000526963 /* CoreGraphics.framework */; };
+		4A2A955015536D7000526963 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4A2A954E15536D7000526963 /* InfoPlist.strings */; };
+		4A2A955215536D7000526963 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A955115536D7000526963 /* main.m */; };
+		4A2A955615536D7000526963 /* TLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A955515536D7000526963 /* TLAppDelegate.m */; };
+		4A2A955915536D7000526963 /* TLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A955815536D7000526963 /* TLViewController.m */; };
+		4A2A955C15536D7000526963 /* TLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2A955A15536D7000526963 /* TLViewController.xib */; };
+		4A2A956C15536E0B00526963 /* NSCalendarAdditons.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A956415536E0B00526963 /* NSCalendarAdditons.m */; };
+		4A2A956D15536E0B00526963 /* NSDateComponentsAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A956615536E0B00526963 /* NSDateComponentsAdditions.m */; };
+		4A2A956E15536E0B00526963 /* TLCalendarScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A956915536E0B00526963 /* TLCalendarScrollView.m */; };
+		4A2A956F15536E0B00526963 /* TLLunarDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A956B15536E0B00526963 /* TLLunarDate.m */; };
+		4A2AABA115536E1C00526963 /* LunarCalendarWidgetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A958F15536E1300526963 /* LunarCalendarWidgetController.m */; };
+		4A2AAC2615536E1D00526963 /* festival-lunar.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A2AA08F15536E1700526963 /* festival-lunar.plist */; };
+		4A2AAC2715536E1D00526963 /* festival-solar.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A2AA09015536E1700526963 /* festival-solar.plist */; };
+		4A2AAC2815536E1D00526963 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A2AA09115536E1700526963 /* Icon-Small@2x.png */; };
+		4A2AACA315536E1D00526963 /* TLDayWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2AAB8215536E1A00526963 /* TLDayWidgetView.m */; };
+		4A2AACA415536E1D00526963 /* TLLunarCalendarWeeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2AAB8415536E1A00526963 /* TLLunarCalendarWeeView.m */; };
+		4A2AACA515536E1D00526963 /* TLMonthWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2AAB8615536E1A00526963 /* TLMonthWidgetView.m */; };
+		4A2AACA615536E1D00526963 /* TLWeekWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2AAB8815536E1A00526963 /* TLWeekWidgetView.m */; };
+		4A2AACA715536E1D00526963 /* TLWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2AAB8A15536E1A00526963 /* TLWidgetView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4A2A954115536D7000526963 /* ChineseCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChineseCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A2A954515536D7000526963 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		4A2A954715536D7000526963 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4A2A954915536D7000526963 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		4A2A954D15536D7000526963 /* ChineseCalendar-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ChineseCalendar-Info.plist"; sourceTree = "<group>"; };
+		4A2A954F15536D7000526963 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4A2A955115536D7000526963 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4A2A955315536D7000526963 /* ChineseCalendar-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChineseCalendar-Prefix.pch"; sourceTree = "<group>"; };
+		4A2A955415536D7000526963 /* TLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TLAppDelegate.h; sourceTree = "<group>"; };
+		4A2A955515536D7000526963 /* TLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TLAppDelegate.m; sourceTree = "<group>"; };
+		4A2A955715536D7000526963 /* TLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TLViewController.h; sourceTree = "<group>"; };
+		4A2A955815536D7000526963 /* TLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TLViewController.m; sourceTree = "<group>"; };
+		4A2A955B15536D7000526963 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TLViewController.xib; sourceTree = "<group>"; };
+		4A2A956315536E0B00526963 /* NSCalendarAdditons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSCalendarAdditons.h; sourceTree = "<group>"; };
+		4A2A956415536E0B00526963 /* NSCalendarAdditons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSCalendarAdditons.m; sourceTree = "<group>"; };
+		4A2A956515536E0B00526963 /* NSDateComponentsAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDateComponentsAdditions.h; sourceTree = "<group>"; };
+		4A2A956615536E0B00526963 /* NSDateComponentsAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateComponentsAdditions.m; sourceTree = "<group>"; };
+		4A2A956715536E0B00526963 /* TLCalendarDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLCalendarDisplay.h; sourceTree = "<group>"; };
+		4A2A956815536E0B00526963 /* TLCalendarScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLCalendarScrollView.h; sourceTree = "<group>"; };
+		4A2A956915536E0B00526963 /* TLCalendarScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLCalendarScrollView.m; sourceTree = "<group>"; };
+		4A2A956A15536E0B00526963 /* TLLunarDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLLunarDate.h; sourceTree = "<group>"; };
+		4A2A956B15536E0B00526963 /* TLLunarDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLLunarDate.m; sourceTree = "<group>"; };
+		4A2A957815536E1300526963 /* BBWeeAppController-Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBWeeAppController-Protocol.h"; sourceTree = "<group>"; };
+		4A2A958F15536E1300526963 /* LunarCalendarWidgetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LunarCalendarWidgetController.m; sourceTree = "<group>"; };
+		4A2AA08F15536E1700526963 /* festival-lunar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "festival-lunar.plist"; sourceTree = "<group>"; };
+		4A2AA09015536E1700526963 /* festival-solar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "festival-solar.plist"; sourceTree = "<group>"; };
+		4A2AA09115536E1700526963 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		4A2AAB8115536E1A00526963 /* TLDayWidgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLDayWidgetView.h; sourceTree = "<group>"; };
+		4A2AAB8215536E1A00526963 /* TLDayWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLDayWidgetView.m; sourceTree = "<group>"; };
+		4A2AAB8315536E1A00526963 /* TLLunarCalendarWeeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLLunarCalendarWeeView.h; sourceTree = "<group>"; };
+		4A2AAB8415536E1A00526963 /* TLLunarCalendarWeeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLLunarCalendarWeeView.m; sourceTree = "<group>"; };
+		4A2AAB8515536E1A00526963 /* TLMonthWidgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLMonthWidgetView.h; sourceTree = "<group>"; };
+		4A2AAB8615536E1A00526963 /* TLMonthWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLMonthWidgetView.m; sourceTree = "<group>"; };
+		4A2AAB8715536E1A00526963 /* TLWeekWidgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLWeekWidgetView.h; sourceTree = "<group>"; };
+		4A2AAB8815536E1A00526963 /* TLWeekWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLWeekWidgetView.m; sourceTree = "<group>"; };
+		4A2AAB8915536E1A00526963 /* TLWidgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLWidgetView.h; sourceTree = "<group>"; };
+		4A2AAB8A15536E1A00526963 /* TLWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLWidgetView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4A2A953E15536D7000526963 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A2A954615536D7000526963 /* UIKit.framework in Frameworks */,
+				4A2A954815536D7000526963 /* Foundation.framework in Frameworks */,
+				4A2A954A15536D7000526963 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4A2A953615536D7000526963 = {
+			isa = PBXGroup;
+			children = (
+				4A2A954B15536D7000526963 /* ChineseCalendar */,
+				4A2A954415536D7000526963 /* Frameworks */,
+				4A2A954215536D7000526963 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4A2A954215536D7000526963 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4A2A954115536D7000526963 /* ChineseCalendar.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4A2A954415536D7000526963 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4A2A954515536D7000526963 /* UIKit.framework */,
+				4A2A954715536D7000526963 /* Foundation.framework */,
+				4A2A954915536D7000526963 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4A2A954B15536D7000526963 /* ChineseCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				4A2A957015536E1300526963 /* Widget */,
+				4A2A956215536E0B00526963 /* Common */,
+				4A2A955415536D7000526963 /* TLAppDelegate.h */,
+				4A2A955515536D7000526963 /* TLAppDelegate.m */,
+				4A2A955715536D7000526963 /* TLViewController.h */,
+				4A2A955815536D7000526963 /* TLViewController.m */,
+				4A2A955A15536D7000526963 /* TLViewController.xib */,
+				4A2A954C15536D7000526963 /* Supporting Files */,
+			);
+			path = ChineseCalendar;
+			sourceTree = "<group>";
+		};
+		4A2A954C15536D7000526963 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4A2A954D15536D7000526963 /* ChineseCalendar-Info.plist */,
+				4A2A954E15536D7000526963 /* InfoPlist.strings */,
+				4A2A955115536D7000526963 /* main.m */,
+				4A2A955315536D7000526963 /* ChineseCalendar-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4A2A956215536E0B00526963 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				4A2A956315536E0B00526963 /* NSCalendarAdditons.h */,
+				4A2A956415536E0B00526963 /* NSCalendarAdditons.m */,
+				4A2A956515536E0B00526963 /* NSDateComponentsAdditions.h */,
+				4A2A956615536E0B00526963 /* NSDateComponentsAdditions.m */,
+				4A2A956715536E0B00526963 /* TLCalendarDisplay.h */,
+				4A2A956815536E0B00526963 /* TLCalendarScrollView.h */,
+				4A2A956915536E0B00526963 /* TLCalendarScrollView.m */,
+				4A2A956A15536E0B00526963 /* TLLunarDate.h */,
+				4A2A956B15536E0B00526963 /* TLLunarDate.m */,
+			);
+			path = Common;
+			sourceTree = SOURCE_ROOT;
+		};
+		4A2A957015536E1300526963 /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				4A2AA08E15536E1700526963 /* Resources */,
+				4A2A957815536E1300526963 /* BBWeeAppController-Protocol.h */,
+				4A2A958F15536E1300526963 /* LunarCalendarWidgetController.m */,
+				4A2AAB8115536E1A00526963 /* TLDayWidgetView.h */,
+				4A2AAB8215536E1A00526963 /* TLDayWidgetView.m */,
+				4A2AAB8315536E1A00526963 /* TLLunarCalendarWeeView.h */,
+				4A2AAB8415536E1A00526963 /* TLLunarCalendarWeeView.m */,
+				4A2AAB8515536E1A00526963 /* TLMonthWidgetView.h */,
+				4A2AAB8615536E1A00526963 /* TLMonthWidgetView.m */,
+				4A2AAB8715536E1A00526963 /* TLWeekWidgetView.h */,
+				4A2AAB8815536E1A00526963 /* TLWeekWidgetView.m */,
+				4A2AAB8915536E1A00526963 /* TLWidgetView.h */,
+				4A2AAB8A15536E1A00526963 /* TLWidgetView.m */,
+			);
+			path = Widget;
+			sourceTree = SOURCE_ROOT;
+		};
+		4A2AA08E15536E1700526963 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4A2AA08F15536E1700526963 /* festival-lunar.plist */,
+				4A2AA09015536E1700526963 /* festival-solar.plist */,
+				4A2AA09115536E1700526963 /* Icon-Small@2x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4A2A954015536D7000526963 /* ChineseCalendar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A2A955F15536D7000526963 /* Build configuration list for PBXNativeTarget "ChineseCalendar" */;
+			buildPhases = (
+				4A2A953D15536D7000526963 /* Sources */,
+				4A2A953E15536D7000526963 /* Frameworks */,
+				4A2A953F15536D7000526963 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ChineseCalendar;
+			productName = ChineseCalendar;
+			productReference = 4A2A954115536D7000526963 /* ChineseCalendar.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4A2A953815536D7000526963 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Sohu, Inc.";
+			};
+			buildConfigurationList = 4A2A953B15536D7000526963 /* Build configuration list for PBXProject "ChineseCalendar" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4A2A953615536D7000526963;
+			productRefGroup = 4A2A954215536D7000526963 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4A2A954015536D7000526963 /* ChineseCalendar */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4A2A953F15536D7000526963 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A2A955015536D7000526963 /* InfoPlist.strings in Resources */,
+				4A2A955C15536D7000526963 /* TLViewController.xib in Resources */,
+				4A2AAC2615536E1D00526963 /* festival-lunar.plist in Resources */,
+				4A2AAC2715536E1D00526963 /* festival-solar.plist in Resources */,
+				4A2AAC2815536E1D00526963 /* Icon-Small@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4A2A953D15536D7000526963 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A2A955215536D7000526963 /* main.m in Sources */,
+				4A2A955615536D7000526963 /* TLAppDelegate.m in Sources */,
+				4A2A955915536D7000526963 /* TLViewController.m in Sources */,
+				4A2A956C15536E0B00526963 /* NSCalendarAdditons.m in Sources */,
+				4A2A956D15536E0B00526963 /* NSDateComponentsAdditions.m in Sources */,
+				4A2A956E15536E0B00526963 /* TLCalendarScrollView.m in Sources */,
+				4A2A956F15536E0B00526963 /* TLLunarDate.m in Sources */,
+				4A2AABA115536E1C00526963 /* LunarCalendarWidgetController.m in Sources */,
+				4A2AACA315536E1D00526963 /* TLDayWidgetView.m in Sources */,
+				4A2AACA415536E1D00526963 /* TLLunarCalendarWeeView.m in Sources */,
+				4A2AACA515536E1D00526963 /* TLMonthWidgetView.m in Sources */,
+				4A2AACA615536E1D00526963 /* TLWeekWidgetView.m in Sources */,
+				4A2AACA715536E1D00526963 /* TLWidgetView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4A2A954E15536D7000526963 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4A2A954F15536D7000526963 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		4A2A955A15536D7000526963 /* TLViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4A2A955B15536D7000526963 /* en */,
+			);
+			name = TLViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4A2A955D15536D7000526963 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4A2A955E15536D7000526963 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4A2A956015536D7000526963 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ChineseCalendar/ChineseCalendar-Prefix.pch";
+				INFOPLIST_FILE = "ChineseCalendar/ChineseCalendar-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		4A2A956115536D7000526963 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ChineseCalendar/ChineseCalendar-Prefix.pch";
+				INFOPLIST_FILE = "ChineseCalendar/ChineseCalendar-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4A2A953B15536D7000526963 /* Build configuration list for PBXProject "ChineseCalendar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A2A955D15536D7000526963 /* Debug */,
+				4A2A955E15536D7000526963 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4A2A955F15536D7000526963 /* Build configuration list for PBXNativeTarget "ChineseCalendar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A2A956015536D7000526963 /* Debug */,
+				4A2A956115536D7000526963 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4A2A953815536D7000526963 /* Project object */;
+}
