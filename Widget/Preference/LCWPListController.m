@@ -26,7 +26,7 @@
 #pragma mark - Getters
 
 - (NSString *)widgetVersion {
-    return @"0.1";
+    return @"0.2";
 }
 
 - (NSString *)username {

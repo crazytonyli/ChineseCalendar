@@ -1,3 +1,8 @@
 ChineseCalendar.xcodeproj/project.xcworkspace
 ChineseCalendar.xcodeproj/xcuserdata/
 Widget/*.deb
+Widget/.theos
+Widget/_
+Widget/Common/
+Widget/obj/
+Widget/Preference/obj/

@@ -36,6 +36,7 @@ extern NSString * const kTLDatesAttributeKeyFestivalIsLunar;
     UIColor *_currentMonthDayColor;
     UIColor *_notCurrentMonthDayColor;
     UIColor *_todayHighlightColor;
+    UIColor *_holidayTextColor;
     
     NSCalendar *_calendar;
     NSDateComponents *_dateComponents;
@@ -61,7 +62,12 @@ extern NSString * const kTLDatesAttributeKeyFestivalIsLunar;
 @property (nonatomic, retain) UIColor *currentMonthDayColor;
 @property (nonatomic, retain) UIColor *notCurrentMonthDayColor;
 @property (nonatomic, retain) UIColor *todayHighlightColor;
+@property (nonatomic, retain) UIColor *holidayTextColor;
 
 - (NSDictionary *)datesAttributesForDate:(NSDate *)date;
+
+- (void)setFillColorWithAttributes:(NSDictionary *)attributes
+                  componentOfToday:(NSDateComponents *)todayComps
+                           context:(CGContextRef)ctx;
 
 @end

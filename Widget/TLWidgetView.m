@@ -8,6 +8,7 @@
 
 #import "TLWidgetView.h"
 #import "../Common/NSCalendarAdditons.h"
+#import "../Common/NSDateComponentsAdditions.h"
 #import "../Common/TLLunarDate.h"
 
 UIColor *UIColorMakeWithRGBValue(int value);
@@ -31,6 +32,7 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
 @synthesize currentMonthDayColor=_currentMonthDayColor;
 @synthesize notCurrentMonthDayColor=_notCurrentMonthDayColor;
 @synthesize todayHighlightColor=_todayHighlightColor;
+@synthesize holidayTextColor=_holidayTextColor;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -50,6 +52,7 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
         _currentMonthDayColor = [[UIColor whiteColor] retain];
         _notCurrentMonthDayColor = [[UIColor lightGrayColor] retain];
         _todayHighlightColor = [UIColorMakeWithRGBValue(0x24FF5B) retain];
+        _holidayTextColor = [UIColorMakeWithRGBValue(0xFFFF00) retain];
         
         _calendar = [[NSCalendar sharedCalendar] retain];
     }
@@ -71,6 +74,7 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
     [_currentMonthDayColor release];
     [_notCurrentMonthDayColor release];
     [_todayHighlightColor release];
+    [_holidayTextColor release];
     
     [_backgroundImage release];
     
@@ -111,6 +115,31 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
     }
     
     return [dict autorelease];
+}
+
+- (void)setFillColorWithAttributes:(NSDictionary *)attributes
+                  componentOfToday:(NSDateComponents *)todayComps
+                           context:(CGContextRef)ctx {
+    CGColorRef color = NULL;
+    if ([attributes objectForKey:kTLDatesAttributeKeyFestival] == nil) {
+        NSDateComponents *comp = [attributes objectForKey:kTLDatesAttributeKeyDate];
+        if (comp.month == _dateComponents.month) {
+            if ([todayComps isSameDayWithComponents:comp]) {
+                color = _todayHighlightColor.CGColor;
+            } else {
+                if (comp.weekday == 7 || comp.weekday == 1) {
+                    color = _weekendTextColor.CGColor;
+                } else {
+                    color = _currentMonthDayColor.CGColor;
+                }
+            }
+        } else {
+            color = _notCurrentMonthDayColor.CGColor;
+        }
+    } else {
+        color = _holidayTextColor.CGColor;
+    }
+    CGContextSetFillColorWithColor(ctx, color);
 }
 
 @end

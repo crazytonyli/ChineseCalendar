@@ -3,8 +3,7 @@ include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = LunarCalendarWidgetPreference
 LunarCalendarWidgetPreference_FILES = LCWSettingsController.m \
-																			LCWPListController.m \
-																			LCWPColorController.m 
+																			LCWPListController.m 
 LunarCalendarWidgetPreference_INSTALL_PATH = /Library/PreferenceBundles
 LunarCalendarWidgetPreference_FRAMEWORKS = UIKit
 LunarCalendarWidgetPreference_PRIVATE_FRAMEWORKS = Preferences

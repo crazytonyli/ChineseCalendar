@@ -1,7 +1,7 @@
 Package: tonyli.lunarcalendar.widget
 Name: Lunar Calendar Widget for Notification Center
 Depends: firmware (>= 5.0), com.saurik.substrate.safemode, com.chpwn.weeloader, org.thebigboss.customwidgeticons, preferenceloader
-Version: 0.1.0
+Version: 0.2.0
 Architecture: iphoneos-arm
 Description: A chinese lunar calendar widget for the notification center!
 Maintainer: Tony Li <crazygemini.lee@gmail.com>

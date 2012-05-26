@@ -115,21 +115,7 @@
                                    lineBreakMode:UILineBreakModeTailTruncation
                                        alignment:UITextAlignmentCenter];
         
-        CGColorRef color = NULL;
-        if (comp.month == _dateComponents.month) {
-            if ([todayComps isSameDayWithComponents:comp]) {
-                color = _todayHighlightColor.CGColor;
-            } else {
-                if (comp.weekday == 7 || comp.weekday == 1) {
-                    color = _weekendTextColor.CGColor;
-                } else {
-                    color = _currentMonthDayColor.CGColor;
-                }
-            }
-        } else {
-            color = _notCurrentMonthDayColor.CGColor;
-        }
-        CGContextSetFillColorWithColor(ctx, color);
+        [self setFillColorWithAttributes:dict componentOfToday:todayComps context:ctx];
         
         // draw day
         NSString *dayString = [NSString stringWithFormat:@"%d", comp.day];

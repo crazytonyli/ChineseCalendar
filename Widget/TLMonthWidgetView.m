@@ -117,8 +117,8 @@
             CGFloat colX = x + row * weekdayRect.size.width;
             CGFloat colY = y + col * _dayCellSize.height;
             NSUInteger indexes[2] = { row, col };
-            NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:2];
-            NSDateComponents *comp = [[_dates objectForKey:indexPath] objectForKey:kTLDatesAttributeKeyDate];
+            NSDictionary *dict = [_dates objectForKey:[NSIndexPath indexPathWithIndexes:indexes length:2]];
+            NSDateComponents *comp = [dict objectForKey:kTLDatesAttributeKeyDate];
             
             if (col == 0) {
                 // draw weekday
@@ -135,21 +135,7 @@
                                                alignment:UITextAlignmentCenter];
             }
             
-            CGColorRef color = NULL;
-            if (comp.month == _dateComponents.month) {
-                if ([todayComps isSameDayWithComponents:comp]) {
-                    color = _todayHighlightColor.CGColor;
-                } else {
-                    if (comp.weekday == 7 || comp.weekday == 1) {
-                        color = _weekendTextColor.CGColor;
-                    } else {
-                        color = _currentMonthDayColor.CGColor;
-                    }
-                }
-            } else {
-                color = _notCurrentMonthDayColor.CGColor;
-            }
-            CGContextSetFillColorWithColor(ctx, color);
+            [self setFillColorWithAttributes:dict componentOfToday:todayComps context:ctx];
             
             NSString *dayStr = [NSString stringWithFormat:@"%d/", comp.day];
             CGSize daySize = [dayStr sizeWithFont:_dayFont];
@@ -158,8 +144,11 @@
             [dayStr drawInRect:dayRect withFont:_dayFont lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
             
             // draw lunar day
-            TLLunarDate *lunarDate = [[_dates objectForKey:indexPath] objectForKey:kTLDatesAttributeKeyLunarDate];
-            NSString *lunarDayString = lunarDate.lunarDay == 1 ? [lunarDate chineseMonth] : [lunarDate chineseDay];
+            NSString *lunarDayString = [dict objectForKey:kTLDatesAttributeKeyFestival];
+            if (lunarDayString == nil) {
+                TLLunarDate *lunarDate = [dict objectForKey:kTLDatesAttributeKeyLunarDate];
+                lunarDayString = lunarDate.lunarDay == 1 ? [lunarDate chineseMonth] : [lunarDate chineseDay];
+            }
             CGSize lunarDaySize = [lunarDayString sizeWithFont:_lunarDayFont];
             CGRect lunarDayRect = CGRectMake(CGRectGetMaxX(dayRect),
                                              colY + (_dayCellSize.height - _lunarDayFont.lineHeight) / 2,
@@ -200,11 +189,9 @@
     for (int row = 0; row < 7; row++) {
         for (int col = 0; col < kColumnsCount; col++) {
             weekdayRect.origin = CGPointMake(x + row * weekdayRect.size.width, y + col * weekdayRect.size.height);
-//            CGFloat colX = x + row * weekdayRect.size.width;
-//            CGFloat colY = y + col * _dayCellSize.height;
             NSUInteger indexes[2] = { row, col };
-            NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:2];
-            NSDateComponents *comp = [[_dates objectForKey:indexPath] objectForKey:kTLDatesAttributeKeyDate];
+            NSDictionary *dict = [_dates objectForKey:[NSIndexPath indexPathWithIndexes:indexes length:2]];
+            NSDateComponents *comp = [dict objectForKey:kTLDatesAttributeKeyDate];
             
             if (col == 0) {
                 // draw weekday
@@ -222,21 +209,7 @@
                                                alignment:UITextAlignmentCenter];
             }
             
-            CGColorRef color = NULL;
-            if (comp.month == _dateComponents.month) {
-                if ([todayComps isSameDayWithComponents:comp]) {
-                    color = _todayHighlightColor.CGColor;
-                } else {
-                    if (comp.weekday == 7 || comp.weekday == 1) {
-                        color = _weekendTextColor.CGColor;
-                    } else {
-                        color = _currentMonthDayColor.CGColor;
-                    }
-                }
-            } else {
-                color = _notCurrentMonthDayColor.CGColor;
-            }
-            CGContextSetFillColorWithColor(ctx, color);
+            [self setFillColorWithAttributes:dict componentOfToday:todayComps context:ctx];
             
             // draw day
             NSString *dayString = [NSString stringWithFormat:@"%d", comp.day];
@@ -250,8 +223,11 @@
                         alignment:UITextAlignmentCenter];
             
             // draw lunar day
-            TLLunarDate *lunarDate = [[_dates objectForKey:indexPath] objectForKey:kTLDatesAttributeKeyLunarDate];
-            NSString *lunarDayString = lunarDate.lunarDay == 1 ? [lunarDate chineseMonth] : [lunarDate chineseDay];
+            NSString *lunarDayString = [dict objectForKey:kTLDatesAttributeKeyFestival];
+            if (lunarDayString == nil) {
+                TLLunarDate *lunarDate = [dict objectForKey:kTLDatesAttributeKeyLunarDate];
+                lunarDayString = lunarDate.lunarDay == 1 ? [lunarDate chineseMonth] : [lunarDate chineseDay];
+            }
             CGRect lunarDayRect = CGRectMake(weekdayRect.origin.x,
                                              CGRectGetMidY(weekdayRect),
                                              weekdayRect.size.width,

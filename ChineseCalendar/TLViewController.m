@@ -29,7 +29,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
     view = [[TLLunarCalendarWeeView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
-    [view setViewType:TLLunarCalendarWeeViewWeekType];
+    [view setViewType:TLLunarCalendarWeeViewDayType];
     [view setupCalendarView];
     view.layer.borderColor = [UIColor whiteColor].CGColor;
     view.layer.borderWidth = 2.0f;
