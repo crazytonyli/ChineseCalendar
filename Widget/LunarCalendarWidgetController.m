@@ -153,12 +153,12 @@
     CFPreferencesSynchronize(appId, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
     CFPropertyListRef value = CFPreferencesCopyValue(CFSTR("layoutStyle"), appId, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
     if (value) {
-        int style = TLMonthWidgetViewCompactStyle;
+        int style = TLMonthWidgetViewLooseStyle;
         CFNumberGetValue(value, kCFNumberIntType, &style);
         CFRelease(value);
         return style;
     } else {
-        return TLMonthWidgetViewCompactStyle;
+        return TLMonthWidgetViewLooseStyle;
     }
 }
 

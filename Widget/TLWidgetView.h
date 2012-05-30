@@ -70,4 +70,6 @@ extern NSString * const kTLDatesAttributeKeyFestivalIsLunar;
                   componentOfToday:(NSDateComponents *)todayComps
                            context:(CGContextRef)ctx;
 
+- (NSString *)detailForAttribute:(NSDictionary *)attributes;
+
 @end

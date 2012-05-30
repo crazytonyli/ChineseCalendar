@@ -128,12 +128,21 @@
                 lineBreakMode:UILineBreakModeClip
                     alignment:UITextAlignmentCenter];
         
-        // draw lunar day
-        NSString *lunarDayString = [dict objectForKey:kTLDatesAttributeKeyFestival];
-        if (lunarDayString == nil) {
-            TLLunarDate *lunarDate = [dict objectForKey:kTLDatesAttributeKeyLunarDate];
-            lunarDayString = lunarDate.lunarDay == 1 ? [lunarDate chineseMonth] : [lunarDate chineseDay];
+        if ([todayComps isSameDayWithComponents:comp]) {
+            // draw underline.
+            CGContextSetLineWidth(ctx, 1.0f);
+            CGSize size = [dayString sizeWithFont:_dayFont forWidth:dayRect.size.width lineBreakMode:UILineBreakModeClip];
+            CGFloat y = CGRectGetMaxY(dayRect);
+            CGPoint points[2] = {
+                CGPointMake(dayRect.origin.x + roundf((dayRect.size.width - size.width) / 2), y),
+                CGPointMake(CGRectGetMaxX(dayRect) - roundf((dayRect.size.width - size.width) / 2), y)
+            };
+            CGContextAddLines(ctx, points, 2);
+            CGContextStrokePath(ctx);
         }
+        
+        // draw lunar day
+        NSString *lunarDayString = [self detailForAttribute:dict];
         CGRect lunarDayRect = CGRectMake(weekdayRect.origin.x,
                                          CGRectGetMidY(weekdayRect),
                                          weekdayRect.size.width,

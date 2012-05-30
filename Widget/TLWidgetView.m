@@ -47,12 +47,12 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
         _dayFont = [[UIFont boldSystemFontOfSize:12.0f] retain];
         _lunarDayFont = [[UIFont boldSystemFontOfSize:8.0f] retain];
         _textColor = [[UIColor whiteColor] retain];
-        _weekdayTextColor = [UIColorMakeWithRGBValue(0x4D79FF) retain];
-        _weekendTextColor = [UIColorMakeWithRGBValue(0xFF4242) retain];
+        _weekdayTextColor = [UIColorMakeWithRGBValue(0x8F9AD6) retain];
+        _weekendTextColor = [UIColorMakeWithRGBValue(0xF8E27B) retain];
         _currentMonthDayColor = [[UIColor whiteColor] retain];
-        _notCurrentMonthDayColor = [[UIColor lightGrayColor] retain];
-        _todayHighlightColor = [UIColorMakeWithRGBValue(0x24FF5B) retain];
-        _holidayTextColor = [UIColorMakeWithRGBValue(0xFFFF00) retain];
+        _notCurrentMonthDayColor = [UIColorMakeWithRGBValue(0xA8A8AD) retain];
+        _todayHighlightColor = [UIColorMakeWithRGBValue(0x05C5FC) retain];
+        _holidayTextColor = [UIColorMakeWithRGBValue(0xF2972C) retain];
         
         _calendar = [[NSCalendar sharedCalendar] retain];
     }
@@ -121,9 +121,9 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
                   componentOfToday:(NSDateComponents *)todayComps
                            context:(CGContextRef)ctx {
     CGColorRef color = NULL;
-    if ([attributes objectForKey:kTLDatesAttributeKeyFestival] == nil) {
-        NSDateComponents *comp = [attributes objectForKey:kTLDatesAttributeKeyDate];
-        if (comp.month == _dateComponents.month) {
+    NSDateComponents *comp = [attributes objectForKey:kTLDatesAttributeKeyDate];
+    if (comp.month == _dateComponents.month) {
+        if ([attributes objectForKey:kTLDatesAttributeKeyFestival] == nil) {
             if ([todayComps isSameDayWithComponents:comp]) {
                 color = _todayHighlightColor.CGColor;
             } else {
@@ -134,12 +134,26 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
                 }
             }
         } else {
-            color = _notCurrentMonthDayColor.CGColor;
+            color = _holidayTextColor.CGColor;
         }
     } else {
-        color = _holidayTextColor.CGColor;
+        if ([attributes objectForKey:kTLDatesAttributeKeyFestival]) {
+            color = _holidayTextColor.CGColor;
+        } else {
+            color = _notCurrentMonthDayColor.CGColor;
+        }
     }
     CGContextSetFillColorWithColor(ctx, color);
+    CGContextSetStrokeColorWithColor(ctx, color);
+}
+
+- (NSString *)detailForAttribute:(NSDictionary *)attributes {
+    NSString *detail = [attributes objectForKey:kTLDatesAttributeKeyFestival];
+    if (detail == nil) {
+        TLLunarDate *lunarDate = [attributes objectForKey:kTLDatesAttributeKeyLunarDate];
+        detail = lunarDate.lunarDay == 1 ? [lunarDate chineseMonth] : [lunarDate chineseDay];
+    }
+    return detail;
 }
 
 @end
