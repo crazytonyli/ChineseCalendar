@@ -3,6 +3,7 @@
 
 ## Screenshots
 ![截图1](https://raw.github.com/crazytonyli/ChineseCalendar/master/screenshots/1.png "截图1")
+
 ![截图2](https://raw.github.com/crazytonyli/ChineseCalendar/master/screenshots/2.png "截图2")
 
 ## How to install?
