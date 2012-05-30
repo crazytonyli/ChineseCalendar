@@ -48,11 +48,11 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
         _lunarDayFont = [[UIFont boldSystemFontOfSize:8.0f] retain];
         _textColor = [[UIColor whiteColor] retain];
         _weekdayTextColor = [UIColorMakeWithRGBValue(0x8F9AD6) retain];
-        _weekendTextColor = [UIColorMakeWithRGBValue(0xF8E27B) retain];
+        _weekendTextColor = [UIColorMakeWithRGBValue(0xd6be4c) retain];
         _currentMonthDayColor = [[UIColor whiteColor] retain];
         _notCurrentMonthDayColor = [UIColorMakeWithRGBValue(0xA8A8AD) retain];
         _todayHighlightColor = [UIColorMakeWithRGBValue(0x05C5FC) retain];
-        _holidayTextColor = [UIColorMakeWithRGBValue(0xF2972C) retain];
+        _holidayTextColor = [UIColorMakeWithRGBValue(0xe8bc76) retain];
         
         _calendar = [[NSCalendar sharedCalendar] retain];
     }
