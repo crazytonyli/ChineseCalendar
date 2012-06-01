@@ -32,7 +32,7 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
 @synthesize currentMonthDayColor=_currentMonthDayColor;
 @synthesize notCurrentMonthDayColor=_notCurrentMonthDayColor;
 @synthesize todayHighlightColor=_todayHighlightColor;
-@synthesize holidayTextColor=_holidayTextColor;
+@synthesize festivalTextColor=_festivalTextColor;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -52,7 +52,7 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
         _currentMonthDayColor = [[UIColor whiteColor] retain];
         _notCurrentMonthDayColor = [UIColorMakeWithRGBValue(0xA8A8AD) retain];
         _todayHighlightColor = [UIColorMakeWithRGBValue(0x05C5FC) retain];
-        _holidayTextColor = [UIColorMakeWithRGBValue(0xE4B262) retain];
+        _festivalTextColor = [UIColorMakeWithRGBValue(0xE4B262) retain];
         
         _calendar = [[NSCalendar sharedCalendar] retain];
     }
@@ -74,7 +74,7 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
     [_currentMonthDayColor release];
     [_notCurrentMonthDayColor release];
     [_todayHighlightColor release];
-    [_holidayTextColor release];
+    [_festivalTextColor release];
     
     [_backgroundImage release];
     
@@ -123,22 +123,22 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
     CGColorRef color = NULL;
     NSDateComponents *comp = [attributes objectForKey:kTLDatesAttributeKeyDate];
     if (comp.month == _dateComponents.month) {
-        if ([attributes objectForKey:kTLDatesAttributeKeyFestival] == nil) {
-            if ([todayComps isSameDayWithComponents:comp]) {
-                color = _todayHighlightColor.CGColor;
-            } else {
+        if ([todayComps isSameDayWithComponents:comp]) {
+            color = _todayHighlightColor.CGColor;
+        } else {
+            if ([attributes objectForKey:kTLDatesAttributeKeyFestival] == nil) {
                 if (comp.weekday == 7 || comp.weekday == 1) {
                     color = _weekendTextColor.CGColor;
                 } else {
                     color = _currentMonthDayColor.CGColor;
                 }
+            } else {
+                color = _festivalTextColor.CGColor;
             }
-        } else {
-            color = _holidayTextColor.CGColor;
         }
     } else {
         if ([attributes objectForKey:kTLDatesAttributeKeyFestival]) {
-            color = _holidayTextColor.CGColor;
+            color = _festivalTextColor.CGColor;
         } else {
             color = _notCurrentMonthDayColor.CGColor;
         }

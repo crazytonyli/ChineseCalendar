@@ -60,7 +60,7 @@
     return _view;
 }
 
-- (CGFloat)notificationCenterWidth {
+- (CGFloat)viewWidth {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
             return 320.0f;
@@ -70,10 +70,6 @@
     } else {
         return 480.0f;
     }
-}
-
-- (CGFloat)viewWidth {
-    return [self notificationCenterWidth];
 }
 
 - (void)displayView {
