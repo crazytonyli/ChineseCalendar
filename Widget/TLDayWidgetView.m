@@ -37,9 +37,10 @@
         CGContextSetFillColorWithColor(ctx, _textColor.CGColor);
     }
     
+    const NSString *weekdays[7] = { @"星期日", @"星期一", @"星期二", @"星期三", @"星期四", @"星期五", @"星期六" };
     NSString *text = [NSString stringWithFormat:@"%d年%d月%d日 %@",
-                      _dateComponents.year, _dateComponents.month, _dateComponents.day,
-                      [[_calendar chineseWeekdaysWithPrefix:@"星期"] objectAtIndex:(_dateComponents.weekday - 1)]];
+                      _dateComponents.year, _dateComponents.month,
+                      _dateComponents.day, weekdays[_dateComponents.weekday - 1]];
     CGSize size = [text sizeWithFont:_captionFont constrainedToSize:rect.size];
     CGRect drawRect = CGRectMake(roundf((rect.size.width - size.width) / 2),
                                  roundf((rect.size.height - _captionFont.lineHeight - _lunarDayFont.lineHeight) / 2),

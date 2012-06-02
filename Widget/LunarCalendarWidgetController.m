@@ -78,7 +78,7 @@
         int fow = [self firstDayOfWeek];
         if (fow != [[NSCalendar sharedCalendar] firstWeekday]) {
             [[NSCalendar sharedCalendar] setFirstWeekday:fow];
-            [calView setNeedsLayout];
+            [calView setNeedsLayoutWidgets];
         }
         
         TLLunarCalendarWeeViewType type = [self viewType];

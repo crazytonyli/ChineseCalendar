@@ -139,23 +139,25 @@
     }
 }
 
+- (void)setNeedsLayoutWidgets {
+    _needLayoutWidgets = YES;
+    [self setNeedsLayout];
+}
+
 #pragma mark - UIScrollView delegate
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (!decelerate) {
-        _needLayoutWidgets = YES;
-        [self setNeedsLayout];
+        [self setNeedsLayoutWidgets];
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    _needLayoutWidgets = YES;
-    [self setNeedsLayout];
+    [self setNeedsLayoutWidgets];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    _needLayoutWidgets = YES;
-    [self setNeedsLayout];
+    [self setNeedsLayoutWidgets];
 }
 
 #pragma mark - TLWidgetView data source

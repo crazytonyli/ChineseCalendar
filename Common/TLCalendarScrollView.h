@@ -27,4 +27,6 @@
 
 - (void)displayCurrentDateWithAnimation:(BOOL)animted;
 
+- (void)setNeedsLayoutWidgets;
+
 @end

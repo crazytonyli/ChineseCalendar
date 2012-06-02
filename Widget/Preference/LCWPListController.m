@@ -26,7 +26,7 @@
 #pragma mark - Getters
 
 - (NSString *)widgetVersion {
-    return @"0.2";
+    return @"0.2.1";
 }
 
 - (NSString *)username {
@@ -48,6 +48,10 @@
     NSString *url = [NSString stringWithFormat:@"mailto:crazygemini.lee@gmail.com?subject=Chinese Calendar Feedback (Version: %@)", [self widgetVersion]];
     url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+}
+
+- (void)donate {
+  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://me.alipay.com/cyntin"]];
 }
 
 @end
