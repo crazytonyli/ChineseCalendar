@@ -107,11 +107,9 @@ NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
     [dict setObject:comp forKey:kTLDatesAttributeKeyDate];
     [dict setObject:lunarDate forKey:kTLDatesAttributeKeyLunarDate];
     
-    NSDate *start = [NSDate date];
     const char *name = solarterm_name(solarterm_index(comp.year, comp.month, comp.day));
     if (name) {
         [dict setObject:[NSString stringWithCString:name encoding:NSUTF8StringEncoding] forKey:kTLDatesAttributeKeySolarTerm];
-        NSLog(@"%f", -[start timeIntervalSinceNow]);
     }
     
     NSString *fest = [_dataSource widgetView:self solarFestivalForDateComponents:comp];

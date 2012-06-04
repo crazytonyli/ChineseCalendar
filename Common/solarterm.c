@@ -25,37 +25,48 @@ struct SolarTerm {
 };
 
 int solarterm_index(int year, int month, int day) {
-    struct SolarTerm solarTerms[2];
-    int n;
-    for (n = month * 2 - 1; n <= month * 2; n++)
-    {
-        double Termdays = Term(year, n, 1);
-        double mdays = AntiDayDifference(year, floor(Termdays));
-        int tMonth = (int)ceil((double)n / 2);
-        int tday = (int)mdays % 100;
-        
-        if (n >= 3)
-            solarTerms[n - month * 2 + 1].solarIndex = n - 3;
-        else
-            solarTerms[n - month * 2 + 1].solarIndex = n + 21;
-        
-        solarTerms[n - month * 2 + 1].solarDate = compress_date(year, tMonth, tday);
-    }
+    // 节气的日期范围 0-4个字节表示最小日期
+    const static int ranges[] = {
+        0xa3, 0x292, 0xe4, 0x2d3, 0xc4, 0x2b3, 0xe4, 0x2d4, 0xe4, 0x2d4, 0x106, 0x316,
+        0x126, 0x316, 0x126, 0x316, 0x127, 0x316, 0x106, 0x2f5, 0x106, 0x2f5, 0xe4, 0x2b3
+    };
     
     int index = -1;
-    int i;
-    for (i=0; i<2; i++)
-    {
-        if (solarTerms[i].solarDate == compress_date(year, month, day)) {
-            index = solarTerms[i].solarIndex;
-            break;
+    int guess = month == 1 ? 22 : (month - 2) * 2;
+    if ((day >= (ranges[guess] & 0x1F) && day <= (ranges[guess] >> 5))
+        || (day >= (ranges[guess + 1] & 0x1F) && day <= (ranges[guess + 1] >> 5))) {
+        struct SolarTerm solarTerms[2];
+        int n = month * 2 - 1;
+        for (; n <= month * 2; n++)
+        {
+            double Termdays = Term(year, n, 1);
+            double mdays = AntiDayDifference(year, floor(Termdays));
+            int tMonth = (int)ceil((double)n / 2);
+            int tday = (int)mdays % 100;
+            
+            if (n >= 3)
+                solarTerms[n - month * 2 + 1].solarIndex = n - 3;
+            else
+                solarTerms[n - month * 2 + 1].solarIndex = n + 21;
+            
+            solarTerms[n - month * 2 + 1].solarDate = compress_date(year, tMonth, tday);
+        }
+        
+        int i = 0;
+        for (; i<2; i++)
+        {
+            if (solarTerms[i].solarDate == compress_date(year, month, day)) {
+                index = solarTerms[i].solarIndex;
+                break;
+            }
         }
     }
+
     return index;
 }
 
 const char *solarterm_name(const int index) {
-    if (index >= 1 && index <= 24) {
+    if (index >= 0 && index < 24) {
         const static char* SolarTerms[] = {"立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至", "小寒", "大寒" };
         return SolarTerms[index];
     } else {
