@@ -8,6 +8,7 @@ LunarCalendarWidget_FILES = LunarCalendarWidgetController.m \
 														../Common/NSCalendarAdditons.m \
 														../Common/NSDateComponentsAdditions.m \
 														../Common/TLLunarDate.m \
+														../Common/solarterm.c \
 														../Common/TLCalendarScrollView.m \
 														TLLunarCalendarWeeView.m \
 														TLMonthWidgetView.m \

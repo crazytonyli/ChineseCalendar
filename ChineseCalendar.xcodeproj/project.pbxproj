@@ -28,6 +28,7 @@
 		4A2AACA515536E1D00526963 /* TLMonthWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2AAB8615536E1A00526963 /* TLMonthWidgetView.m */; };
 		4A2AACA615536E1D00526963 /* TLWeekWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2AAB8815536E1A00526963 /* TLWeekWidgetView.m */; };
 		4A2AACA715536E1D00526963 /* TLWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2AAB8A15536E1A00526963 /* TLWidgetView.m */; };
+		4A4392CA157C58F900BAFFDE /* solarterm.c in Sources */ = {isa = PBXBuildFile; fileRef = 4A4392C9157C58F900BAFFDE /* solarterm.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,8 @@
 		4A2AAB8815536E1A00526963 /* TLWeekWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLWeekWidgetView.m; sourceTree = "<group>"; };
 		4A2AAB8915536E1A00526963 /* TLWidgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLWidgetView.h; sourceTree = "<group>"; };
 		4A2AAB8A15536E1A00526963 /* TLWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLWidgetView.m; sourceTree = "<group>"; };
+		4A4392C7157C58EF00BAFFDE /* solarterm.h */ = {isa = PBXFileReference; fileEncoding = 4; path = solarterm.h; sourceTree = "<group>"; };
+		4A4392C9157C58F900BAFFDE /* solarterm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = solarterm.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +152,8 @@
 				4A2A956915536E0B00526963 /* TLCalendarScrollView.m */,
 				4A2A956A15536E0B00526963 /* TLLunarDate.h */,
 				4A2A956B15536E0B00526963 /* TLLunarDate.m */,
+				4A4392C7157C58EF00BAFFDE /* solarterm.h */,
+				4A4392C9157C58F900BAFFDE /* solarterm.c */,
 			);
 			path = Common;
 			sourceTree = SOURCE_ROOT;
@@ -262,6 +267,7 @@
 				4A2AACA515536E1D00526963 /* TLMonthWidgetView.m in Sources */,
 				4A2AACA615536E1D00526963 /* TLWeekWidgetView.m in Sources */,
 				4A2AACA715536E1D00526963 /* TLWidgetView.m in Sources */,
+				4A4392CA157C58F900BAFFDE /* solarterm.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +342,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChineseCalendar/ChineseCalendar-Prefix.pch";
 				INFOPLIST_FILE = "ChineseCalendar/ChineseCalendar-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -347,6 +354,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChineseCalendar/ChineseCalendar-Prefix.pch";
 				INFOPLIST_FILE = "ChineseCalendar/ChineseCalendar-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

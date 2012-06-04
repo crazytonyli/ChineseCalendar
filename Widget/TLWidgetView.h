@@ -20,8 +20,9 @@
 
 extern NSString * const kTLDatesAttributeKeyDate;
 extern NSString * const kTLDatesAttributeKeyLunarDate;
-extern NSString * const kTLDatesAttributeKeyFestival;
-extern NSString * const kTLDatesAttributeKeyFestivalIsLunar;
+extern NSString * const kTLDatesAttributeKeySolarTerm;
+extern NSString * const kTLDatesAttributeKeyFestivalSolar;
+extern NSString * const kTLDatesAttributeKeyFestivalLunar;
 
 @interface TLWidgetView : UIView {
     @package

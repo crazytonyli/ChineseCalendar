@@ -181,8 +181,6 @@ const int MonthAdd[12];
  5~6 春节的公历月份
  19~17 农历1-13 月大小 。月份对应位为1，农历月大(30 天),为0 表示小(29 天)
  20~23 表示当年闰月月份，值为0 为则表示当年无闰月。
- 
- @see http://blog.chinaunix.net/space.php?uid=20480343&do=blog&id=1941601
  */
 const unsigned int LunarCalendarTable[199] = {
     0x04AE53,0x0A5748,0x5526BD,0x0D2650,0x0D9544,0x46AAB9,0x056A4D,0x09AD42,0x24AEB6,0x04AE4A,/*1901-1910*/
@@ -208,3 +206,4 @@ const unsigned int LunarCalendarTable[199] = {
 };
 
 const int MonthAdd[12] = {0,31,59,90,120,151,181,212,243,273,304,334};
+

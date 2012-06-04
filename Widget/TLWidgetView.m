@@ -10,13 +10,17 @@
 #import "../Common/NSCalendarAdditons.h"
 #import "../Common/NSDateComponentsAdditions.h"
 #import "../Common/TLLunarDate.h"
+#include "../Common/solarterm.h"
 
-UIColor *UIColorMakeWithRGBValue(int value);
+#define UIColorMakeWithRGBValue(value) \
+[UIColor colorWithRed:((value >> 16) / 255.0) green:(((value & 0x00ff00) >> 8) / 255.0) blue:((value & 0x0000ff) / 255.0) alpha:1.0]
+
 
 NSString * const kTLDatesAttributeKeyDate = @"date";
 NSString * const kTLDatesAttributeKeyLunarDate = @"date.lunar";
-NSString * const kTLDatesAttributeKeyFestival = @"fest";
-NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
+NSString * const kTLDatesAttributeKeySolarTerm = @"solarterm";
+NSString * const kTLDatesAttributeKeyFestivalSolar = @"fest.solar";
+NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
 
 @implementation TLWidgetView
 
@@ -103,16 +107,23 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
     [dict setObject:comp forKey:kTLDatesAttributeKeyDate];
     [dict setObject:lunarDate forKey:kTLDatesAttributeKeyLunarDate];
     
-    BOOL isLunar = NO;
+    NSDate *start = [NSDate date];
+    const char *name = solarterm_name(solarterm_index(comp.year, comp.month, comp.day));
+    if (name) {
+        [dict setObject:[NSString stringWithCString:name encoding:NSUTF8StringEncoding] forKey:kTLDatesAttributeKeySolarTerm];
+        NSLog(@"%f", -[start timeIntervalSinceNow]);
+    }
+    
     NSString *fest = [_dataSource widgetView:self solarFestivalForDateComponents:comp];
-    if (fest == nil) {
-        fest = [_dataSource widgetView:self lunarFestivalForDate:lunarDate];
-        isLunar = YES;
-    }
     if (fest) {
-        [dict setObject:fest forKey:kTLDatesAttributeKeyFestival];
-        [dict setObject:[NSNumber numberWithBool:isLunar] forKey:kTLDatesAttributeKeyFestivalIsLunar];
+        [dict setObject:fest forKey:kTLDatesAttributeKeyFestivalSolar];
     }
+    fest = [_dataSource widgetView:self lunarFestivalForDate:lunarDate];
+    if (fest) {
+        [dict setObject:fest forKey:kTLDatesAttributeKeyFestivalLunar];
+    }
+    
+    [lunarDate release];
     
     return [dict autorelease];
 }
@@ -122,22 +133,25 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
                            context:(CGContextRef)ctx {
     CGColorRef color = NULL;
     NSDateComponents *comp = [attributes objectForKey:kTLDatesAttributeKeyDate];
+    BOOL festival = [attributes objectForKey:kTLDatesAttributeKeyFestivalSolar] 
+    || [attributes objectForKey:kTLDatesAttributeKeyFestivalLunar]
+    || [attributes objectForKey:kTLDatesAttributeKeySolarTerm];
     if (comp.month == _dateComponents.month) {
         if ([todayComps isSameDayWithComponents:comp]) {
             color = _todayHighlightColor.CGColor;
         } else {
-            if ([attributes objectForKey:kTLDatesAttributeKeyFestival] == nil) {
+            if (festival) {
+                color = _festivalTextColor.CGColor;
+            } else {
                 if (comp.weekday == 7 || comp.weekday == 1) {
                     color = _weekendTextColor.CGColor;
                 } else {
                     color = _currentMonthDayColor.CGColor;
                 }
-            } else {
-                color = _festivalTextColor.CGColor;
             }
         }
     } else {
-        if ([attributes objectForKey:kTLDatesAttributeKeyFestival]) {
+        if (festival) {
             color = _festivalTextColor.CGColor;
         } else {
             color = _notCurrentMonthDayColor.CGColor;
@@ -148,7 +162,13 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
 }
 
 - (NSString *)detailForAttribute:(NSDictionary *)attributes {
-    NSString *detail = [attributes objectForKey:kTLDatesAttributeKeyFestival];
+    NSString *detail = [attributes objectForKey:kTLDatesAttributeKeyFestivalLunar];
+    if (detail == nil) {
+        detail = [attributes objectForKey:kTLDatesAttributeKeyFestivalSolar];
+    }
+    if (detail == nil) {
+        detail = [attributes objectForKey:kTLDatesAttributeKeySolarTerm];
+    }
     if (detail == nil) {
         TLLunarDate *lunarDate = [attributes objectForKey:kTLDatesAttributeKeyLunarDate];
         detail = lunarDate.lunarDay == 1 ? [lunarDate chineseMonth] : [lunarDate chineseDay];
@@ -158,9 +178,3 @@ NSString * const kTLDatesAttributeKeyFestivalIsLunar = @"fest.lunar";
 
 @end
 
-UIColor *UIColorMakeWithRGBValue(int value) {
-    float red = (value >> 16) / 255.0;
-    float green = ((value & 0x00ff00) >> 8) / 255.0;
-    float blue = (value & 0x0000ff) / 255.0;
-    return [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
-}

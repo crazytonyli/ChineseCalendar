@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ @see http://blog.chinaunix.net/space.php?uid=20480343&do=blog&id=1941601
+ */
+
 @interface TLLunarDate : NSObject {
     int lunarYear, lunarMonth, lunarDay;
     
