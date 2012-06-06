@@ -9,7 +9,7 @@
 #import "TLCalendarScrollView.h"
 #import "NSCalendarAdditons.h"
 #import "../Widget/TLWidgetView.h"
-#import "TLLunarDate.h"
+#include "lunardate.h"
 
 @interface TLCalendarScrollView(/*PrivateMethods*/)<TLWidgetViewDataSource>
 
@@ -21,6 +21,21 @@
 
 - (id)initWithFrame:(CGRect)frame {
     return [self initWithFrame:frame views:nil];
+}
+
+
+- (NSDictionary *)festivalWithPlist:(NSString *)path {
+    // 0.003584
+    NSBundle *mainBundle = [NSBundle bundleForClass:[self class]];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:[mainBundle pathForResource:path ofType:@"plist"]];
+    NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithCapacity:10];
+    [dict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        int value = [key intValue];
+        int month = value / 100;
+        int day = value - month * 100;
+        [ret setObject:obj forKey:[NSNumber numberWithInt:((month << 5 | day))]];
+    }];
+    return ret;
 }
 
 - (id)initWithFrame:(CGRect)frame views:(NSArray *)views {
@@ -37,11 +52,8 @@
         
         _calendar = [[NSCalendar sharedCalendar] retain];
         
-        NSBundle *mainBundle = [NSBundle bundleForClass:[self class]];
-        NSString *lunar = [mainBundle pathForResource:@"festival-lunar" ofType:@"plist"];
-        NSString *solar = [mainBundle pathForResource:@"festival-solar" ofType:@"plist"];
-        _lunarFestival = [[NSDictionary alloc] initWithContentsOfFile:lunar];
-        _solarFestival = [[NSDictionary alloc] initWithContentsOfFile:solar];
+        _lunarFestival = [[self festivalWithPlist:@"festival-lunar"] retain];
+        _solarFestival = [[self festivalWithPlist:@"festival-solar"] retain];
     }
     return self;
 }
@@ -49,7 +61,6 @@
 - (void)dealloc {
     [_views release];
     [_calendar release];
-    [_lunarFestival release];
     [_lunarFestival release];
     [_solarFestival release];
     
@@ -162,13 +173,12 @@
 
 #pragma mark - TLWidgetView data source
 
-- (NSString *)widgetView:(TLWidgetView *)view lunarFestivalForDate:(TLLunarDate *)date {
-    return [_lunarFestival objectForKey:[NSString stringWithFormat:@"%02d%02d", date.lunarMonth, date.lunarDay]];
+- (NSString *)widgetView:(TLWidgetView *)view lunarFestivalForDate:(LunarDate)date {
+    return [_lunarFestival objectForKey:[NSNumber numberWithInt:((date.month << 5) | date.day)]];
 }
 
 - (NSString *)widgetView:(TLWidgetView *)view solarFestivalForDateComponents:(NSDateComponents *)comp {
-    NSString *key = [NSString stringWithFormat:@"%02d%02d", comp.month, comp.day];
-    return [_solarFestival objectForKey:key];
+    return [_solarFestival objectForKey:[NSNumber numberWithInt:(comp.month * 100 + comp.day)]];
 }
 
 #pragma mark - Private methods
@@ -212,8 +222,6 @@
         [current setDateComponents:currentComponents];
         [prev setDateComponents:[current previousDateComponents]];
         [next setDateComponents:[current nextDateComponents]];
-        
-        [current setNeedsLayout];
     }
 }
 

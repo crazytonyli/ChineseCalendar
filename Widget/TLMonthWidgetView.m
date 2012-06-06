@@ -7,11 +7,13 @@
 //
 
 #import "TLMonthWidgetView.h"
-#import "../Common/TLLunarDate.h"
+#import "../Common/lunardate.h"
 #import "../Common/NSDateComponentsAdditions.h"
 #import "../Common/NSCalendarAdditons.h"
 
 #define kColumnsCount 5
+
+int maxdaysofmonth(int year, int month);
 
 @implementation TLMonthWidgetView
 
@@ -46,45 +48,50 @@
 }
 
 - (void)layoutSubviews {
-    // days of month
-    NSRange range = [_calendar rangeOfUnit:NSDayCalendarUnit
-                                    inUnit:NSMonthCalendarUnit
-                                   forDate:[_calendar dateFromComponents:_dateComponents]];
-    
-    // info about first days of month
-    NSDateComponents *comp = [_dateComponents copy];
-    comp.day = range.location;
-    NSDate *firstDayOfMonth = [_calendar dateFromComponents:comp];
-    NSDateComponents *firstDayOfMonthComp = [_calendar components:NSWeekdayCalendarUnit fromDate:firstDayOfMonth];
-    [comp release];
-    
-    // info about first cell in TLMonthView
-    NSDateComponents *c = [[NSDateComponents alloc] init];
-    c.day = [_calendar firstWeekday] - firstDayOfMonthComp.weekday;
-    NSDate *firstDayInView = [_calendar dateByAddingComponents:c toDate:firstDayOfMonth options:0];
-    [c release];
-    
-    // columns of TLMonthView
-    if (_dates == nil) {
-        _dates = [[NSMutableDictionary alloc] initWithCapacity:(7 * kColumnsCount)];
-    } else {
-        [_dates removeAllObjects];
-    }
-    
-    NSDateComponents *offsetWithFirstDayInView = [[NSDateComponents alloc] init];
-    for (int row = 0; row < 7; row++) {
-        for (int col = 0; col < kColumnsCount; col++) {
-            // calculate date of cell (row, col) by comparing to date of first cell
-            offsetWithFirstDayInView.day = row + col * 7;
-            NSDate *date = [_calendar dateByAddingComponents:offsetWithFirstDayInView toDate:firstDayInView options:0];
-            NSUInteger indexes[2] = {row, col};
-            [_dates setObject:[self datesAttributesForDate:date]
-                       forKey:[NSIndexPath indexPathWithIndexes:indexes length:2]];
+    if ([self isValidDateComponents:_dateComponents]) {
+        const static NSCalendarUnit unit = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit);
+        
+        // info about first days of month
+        NSDateComponents *comp = [_dateComponents copy];
+        comp.day = 1;
+        NSDate *firstDayOfMonth = [_calendar dateFromComponents:comp];
+        NSDateComponents *firstDayOfMonthComp = [_calendar components:unit fromDate:firstDayOfMonth];
+        [comp release];
+        
+        // info about first cell in TLMonthView
+        NSDateComponents *c = [[NSDateComponents alloc] init];
+        c.day = [_calendar firstWeekday] - firstDayOfMonthComp.weekday;
+        NSDate *firstDayInView = [_calendar dateByAddingComponents:c toDate:firstDayOfMonth options:0];
+        [c release];
+        
+        // columns of TLMonthView
+        if (_dates == nil) {
+            _dates = [[NSMutableDictionary alloc] initWithCapacity:(7 * kColumnsCount)];
+        } else {
+            [_dates removeAllObjects];
         }
+        
+        const static NSTimeInterval DAY_INTERVAL = 24 * 60 * 60;
+
+        for (int row = 0; row < 7; row++) {
+            for (int col = 0; col < kColumnsCount; col++) {
+                NSDate *date = [NSDate dateWithTimeInterval:(DAY_INTERVAL * (row + col * 7)) sinceDate:firstDayInView];
+                NSUInteger indexes[2] = {row, col};
+                [_dates setObject:[self datesAttributesForDateComponents:[_calendar components:unit fromDate:date]]
+                           forKey:[NSIndexPath indexPathWithIndexes:indexes length:2]];
+            }
+        }
+        
+        [self setNeedsDisplay];
     }
-    [offsetWithFirstDayInView release];
-    
-    [self setNeedsDisplay];
+}
+
+- (BOOL)containsDateComponents:(NSDateComponents *)comp {
+    return _dateComponents.year == comp.year && _dateComponents.month == comp.month;
+}
+
+- (BOOL)isValidDateComponents:(NSDateComponents *)comp {
+    return comp.month <= 12 && comp.month > 0 && comp.day < 32 && comp.day > 0;
 }
 
 - (void)drawCompactStyle {
@@ -341,3 +348,24 @@
 }
 
 @end
+
+int maxdaysofmonth(int year, int month) {
+    const static BOOL LEAP_MONTH[12] = { 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1 };
+    
+    int maxDay;
+    if (LEAP_MONTH[month - 1]) {
+        maxDay = 31;
+    } else {
+        if (month == 2) {
+            int year = year;
+            if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+                maxDay = 29;
+            } else {
+                maxDay = 30;
+            }
+        } else {
+            maxDay = 30;
+        }
+    }
+    return maxDay;
+}

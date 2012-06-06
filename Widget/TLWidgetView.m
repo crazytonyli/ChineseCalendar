@@ -9,7 +9,7 @@
 #import "TLWidgetView.h"
 #import "../Common/NSCalendarAdditons.h"
 #import "../Common/NSDateComponentsAdditions.h"
-#import "../Common/TLLunarDate.h"
+#include "../Common/lunardate.h"
 #include "../Common/solarterm.h"
 
 #define UIColorMakeWithRGBValue(value) \
@@ -90,7 +90,7 @@ NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
 }
 
 - (void)setDateComponents:(NSDateComponents *)dateComponents {
-    if (_dateComponents != dateComponents) {
+    if (![self containsDateComponents:dateComponents]) {
         [_dateComponents release];
         _dateComponents = [dateComponents copy];
         
@@ -99,31 +99,38 @@ NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
     }
 }
 
-- (NSDictionary *)datesAttributesForDate:(NSDate *)date {
-    const static NSCalendarUnit unit = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit);
-    NSDateComponents *comp = [_calendar components:unit fromDate:date];
-    TLLunarDate *lunarDate = [[TLLunarDate alloc] initWithSolarDateComponents:comp];
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:4];
+- (NSDictionary *)datesAttributesForDateComponents:(NSDateComponents *)comp {
+    LunarDate lunar = lunardate_from_solar(comp.year, comp.month, comp.day);
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:8];
     [dict setObject:comp forKey:kTLDatesAttributeKeyDate];
-    [dict setObject:lunarDate forKey:kTLDatesAttributeKeyLunarDate];
+    NSString *lunarDesc = [NSString stringWithCString:(lunar.day == 1 ? lunardate_month(lunar.month) : lunardate_day(lunar.day))
+                                             encoding:NSUTF8StringEncoding];
+    [dict setObject:lunarDesc forKey:kTLDatesAttributeKeyLunarDate];
     
-    const char *name = solarterm_name(solarterm_index(comp.year, comp.month, comp.day));
-    if (name) {
-        [dict setObject:[NSString stringWithCString:name encoding:NSUTF8StringEncoding] forKey:kTLDatesAttributeKeySolarTerm];
+    int solar = solarterm_index(comp.year, comp.month, comp.day);
+    if (solar >= 0 && solar < 24) {
+        [dict setObject:[NSString stringWithCString:solarterm_name(solar) encoding:NSUTF8StringEncoding]
+                 forKey:kTLDatesAttributeKeySolarTerm];
     }
-    
+
     NSString *fest = [_dataSource widgetView:self solarFestivalForDateComponents:comp];
     if (fest) {
         [dict setObject:fest forKey:kTLDatesAttributeKeyFestivalSolar];
     }
-    fest = [_dataSource widgetView:self lunarFestivalForDate:lunarDate];
+    fest = [_dataSource widgetView:self lunarFestivalForDate:lunar];
     if (fest) {
         [dict setObject:fest forKey:kTLDatesAttributeKeyFestivalLunar];
     }
     
-    [lunarDate release];
-    
     return [dict autorelease];
+}
+
+- (BOOL)containsDateComponents:(NSDateComponents *)comp {
+    return _dateComponents == comp;
+}
+
+- (BOOL)isValidDateComponents:(NSDateComponents *)comp {
+    return YES;
 }
 
 - (void)setFillColorWithAttributes:(NSDictionary *)attributes
@@ -168,8 +175,7 @@ NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
         detail = [attributes objectForKey:kTLDatesAttributeKeySolarTerm];
     }
     if (detail == nil) {
-        TLLunarDate *lunarDate = [attributes objectForKey:kTLDatesAttributeKeyLunarDate];
-        detail = lunarDate.lunarDay == 1 ? [lunarDate chineseMonth] : [lunarDate chineseDay];
+        detail = [attributes objectForKey:kTLDatesAttributeKeyLunarDate];
     }
     return detail;
 }

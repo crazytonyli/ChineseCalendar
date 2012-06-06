@@ -9,7 +9,6 @@
 #import "TLViewController.h"
 #import "TLCalendarScrollView.h"
 #import "TLLunarCalendarWeeView.h"
-#import "TLLunarDate.h"
 #include "solarterm.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -31,7 +30,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
     view = [[TLLunarCalendarWeeView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
-    [view setViewType:TLLunarCalendarWeeViewMonthType];
+    [view setViewType:TLLunarCalendarWeeViewWeekType];
     [view setupCalendarView];
     view.layer.borderColor = [UIColor whiteColor].CGColor;
     view.layer.borderWidth = 2.0f;

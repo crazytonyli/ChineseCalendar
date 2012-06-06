@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#include "../Common/lunardate.h"
 
 @class TLWidgetView;
-@class TLLunarDate;
 
 @protocol TLWidgetViewDataSource <NSObject>
 
-- (NSString *)widgetView:(TLWidgetView *)view lunarFestivalForDate:(TLLunarDate *)date;
+- (NSString *)widgetView:(TLWidgetView *)view lunarFestivalForDate:(LunarDate)date;
 - (NSString *)widgetView:(TLWidgetView *)view solarFestivalForDateComponents:(NSDateComponents *)comp;
 
 @end
@@ -65,7 +65,11 @@ extern NSString * const kTLDatesAttributeKeyFestivalLunar;
 @property (nonatomic, retain) UIColor *todayHighlightColor;
 @property (nonatomic, retain) UIColor *festivalTextColor;
 
-- (NSDictionary *)datesAttributesForDate:(NSDate *)date;
+- (NSDictionary *)datesAttributesForDateComponents:(NSDateComponents *)comp;
+
+- (BOOL)containsDateComponents:(NSDateComponents *)comp;
+
+- (BOOL)isValidDateComponents:(NSDateComponents *)comp;
 
 - (void)setFillColorWithAttributes:(NSDictionary *)attributes
                   componentOfToday:(NSDateComponents *)todayComps

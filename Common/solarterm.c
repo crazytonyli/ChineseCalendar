@@ -10,14 +10,15 @@
 #include <math.h>
 #include "solarterm.h"
 
-
 int IfGregorian(int y, int m, int d, int opt);
 int DayDifference(int y, int m, int d);
 double AntiDayDifference(int y, double x);
 double EquivalentStandardDay(int y, int m, int d);
 double Term(int y, int n, int pd);
 
-#define compress_date(year, month, day) ((year) * 10000 + (month) * 100 + (day))
+//#define compress_date(year, month, day) ((year) * 10000 + (month) * 100 + (day))
+#define compress_date(year, month, day) (((year) << 7) | (month << 5) | day)
+#define solarterm_range_contains(range, day) (day >= (range & 0x1F) && day <= (range >> 5))
 
 struct SolarTerm {
     int solarIndex;
@@ -33,8 +34,7 @@ int solarterm_index(int year, int month, int day) {
     
     int index = -1;
     int guess = month == 1 ? 22 : (month - 2) * 2;
-    if ((day >= (ranges[guess] & 0x1F) && day <= (ranges[guess] >> 5))
-        || (day >= (ranges[guess + 1] & 0x1F) && day <= (ranges[guess + 1] >> 5))) {
+    if (solarterm_range_contains(ranges[guess], day) || solarterm_range_contains(ranges[guess + 1], day)) {
         struct SolarTerm solarTerms[2];
         int n = month * 2 - 1;
         for (; n <= month * 2; n++)

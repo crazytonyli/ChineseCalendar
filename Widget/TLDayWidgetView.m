@@ -9,7 +9,7 @@
 #import "TLDayWidgetView.h"
 #import "../Common/NSCalendarAdditons.h"
 #import "../Common/NSDateComponentsAdditions.h"
-#import "../Common/TLLunarDate.h"
+#import "../Common/lunardate.h"
 
 @implementation TLDayWidgetView
 
@@ -23,6 +23,10 @@
         self.lunarDayFont = [UIFont boldSystemFontOfSize:16];
     }
     return self;
+}
+
+- (BOOL)containsDateComponents:(NSDateComponents *)comp {
+    return _dateComponents.year == comp.year && _dateComponents.month == comp.month && _dateComponents.day == comp.day;
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -50,15 +54,17 @@
        lineBreakMode:UILineBreakModeTailTruncation
            alignment:UITextAlignmentCenter];
     
-    TLLunarDate *lunar = [[TLLunarDate alloc] initWithSolarDateComponents:_dateComponents];
-    NSString *lunarText = [NSString stringWithFormat:@"农历%@%@年%@%@",
-                           [lunar attribution], [lunar chineseYear], [lunar chineseMonth], [lunar chineseDay]];
+    LunarDate lunar = lunardate_from_solar(_dateComponents.year, _dateComponents.month, _dateComponents.day);
+    char attr[4];
+    lunardate_attribution(lunar.year, attr);
+    NSString *lunarText = [NSString stringWithFormat:@"农历%s%s年%s%s", attr,
+                           lunardate_zodiac(lunar.year), lunardate_month(lunar.month),
+                           lunardate_day(lunar.day)];
     drawRect.size = [lunarText sizeWithFont:_lunarDayFont constrainedToSize:rect.size];
     drawRect.origin.x = roundf((rect.size.width - drawRect.size.width) / 2);
     drawRect.origin.y += _captionFont.lineHeight;
     [lunarText drawInRect:drawRect withFont:_lunarDayFont
             lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentCenter];
-    [lunar release];
 }
 
 #pragma mark - TLCalendarDisplay protocol

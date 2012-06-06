@@ -7,9 +7,9 @@
 //
 
 #import "TLWeekWidgetView.h"
-#import "../Common/TLLunarDate.h"
 #import "../Common/NSCalendarAdditons.h"
 #import "../Common/NSDateComponentsAdditions.h"
+#include "../Common/lunardate.h"
 
 #define CALENDAR_UNIT (NSYearForWeekOfYearCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekOfYearCalendarUnit)
 
@@ -29,41 +29,51 @@
 }
 
 - (void)layoutSubviews {
-    // days of week
-    NSRange range = [_calendar rangeOfUnit:NSDayCalendarUnit
-                                    inUnit:NSWeekCalendarUnit
-                                   forDate:[_calendar dateFromComponents:_dateComponents]];
-    
-    // info about first days of week
-    NSDateComponents *comp = [_dateComponents copy];
-    comp.weekday = range.location;
-    NSDate *firstDayOfWeek = [_calendar dateFromComponents:comp];
-    NSDateComponents *firstDayOfWeekComp = [_calendar components:NSWeekdayCalendarUnit fromDate:firstDayOfWeek];
-    [comp release];
-    
-    // info about first cell in TLMonthView
-    NSDateComponents *c = [[NSDateComponents alloc] init];
-    c.day = [_calendar firstWeekday] - firstDayOfWeekComp.weekday;
-    NSDate *firstDayInView = [_calendar dateByAddingComponents:c toDate:firstDayOfWeek options:0];
-    [c release];
-    
-    // columns of TLMonthView
-    if (_dates == nil) {
-        _dates = [[NSMutableDictionary alloc] initWithCapacity:7];
-    } else {
-        [_dates removeAllObjects];
+    if ([self isValidDateComponents:_dateComponents]) {
+        // days of week
+        NSRange range = [_calendar rangeOfUnit:NSDayCalendarUnit
+                                        inUnit:NSWeekCalendarUnit
+                                       forDate:[_calendar dateFromComponents:_dateComponents]];
+        
+        // info about first days of week
+        NSDateComponents *comp = [_dateComponents copy];
+        comp.weekday = range.location;
+        NSDate *firstDayOfWeek = [_calendar dateFromComponents:comp];
+        NSDateComponents *firstDayOfWeekComp = [_calendar components:NSWeekdayCalendarUnit fromDate:firstDayOfWeek];
+        [comp release];
+        
+        // info about first cell in TLMonthView
+        NSDateComponents *c = [[NSDateComponents alloc] init];
+        c.day = [_calendar firstWeekday] - firstDayOfWeekComp.weekday;
+        NSDate *firstDayInView = [_calendar dateByAddingComponents:c toDate:firstDayOfWeek options:0];
+        [c release];
+        
+        // columns of TLMonthView
+        if (_dates == nil) {
+            _dates = [[NSMutableDictionary alloc] initWithCapacity:7];
+        } else {
+            [_dates removeAllObjects];
+        }
+        
+        const NSCalendarUnit unit = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit);
+        const static NSTimeInterval DAY_INTERVAL = 24 * 60 * 60;
+        for (int row = 0; row < 7; row++) {
+            // calculate date of cell (row, col) by comparing to date of first cell
+            NSDate *date = [NSDate dateWithTimeInterval:(DAY_INTERVAL * row) sinceDate:firstDayInView];
+            [_dates setObject:[self datesAttributesForDateComponents:[_calendar components:unit fromDate:date]]
+                       forKey:[NSNumber numberWithInt:row]];
+        }
+        
+        [self setNeedsDisplay];
     }
-    
-    NSDateComponents *offsetWithFirstDayInView = [[NSDateComponents alloc] init];
-    for (int row = 0; row < 7; row++) {
-        // calculate date of cell (row, col) by comparing to date of first cell
-        offsetWithFirstDayInView.day = row;
-        NSDate *date = [_calendar dateByAddingComponents:offsetWithFirstDayInView toDate:firstDayInView options:0];
-        [_dates setObject:[self datesAttributesForDate:date] forKey:[NSNumber numberWithInt:row]];
-    }
-    [offsetWithFirstDayInView release];
-    
-    [self setNeedsDisplay];
+}
+
+- (BOOL)containsDateComponents:(NSDateComponents *)comp {
+    return _dateComponents.year == comp.year && _dateComponents.weekOfYear == comp.weekOfYear;
+}
+
+- (BOOL)isValidDateComponents:(NSDateComponents *)comp {
+    return _dateComponents.weekOfYear > 0 && _dateComponents.weekOfYear < 55;
 }
 
 // Only override drawRect: if you perform custom drawing.

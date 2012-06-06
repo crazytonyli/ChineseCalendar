@@ -7,7 +7,7 @@ BUNDLE_NAME = LunarCalendarWidget
 LunarCalendarWidget_FILES = LunarCalendarWidgetController.m \
 														../Common/NSCalendarAdditons.m \
 														../Common/NSDateComponentsAdditions.m \
-														../Common/TLLunarDate.m \
+														../Common/lunardate.c \
 														../Common/solarterm.c \
 														../Common/TLCalendarScrollView.m \
 														TLLunarCalendarWeeView.m \

@@ -18,7 +18,6 @@
 		4A2A956C15536E0B00526963 /* NSCalendarAdditons.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A956415536E0B00526963 /* NSCalendarAdditons.m */; };
 		4A2A956D15536E0B00526963 /* NSDateComponentsAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A956615536E0B00526963 /* NSDateComponentsAdditions.m */; };
 		4A2A956E15536E0B00526963 /* TLCalendarScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A956915536E0B00526963 /* TLCalendarScrollView.m */; };
-		4A2A956F15536E0B00526963 /* TLLunarDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A956B15536E0B00526963 /* TLLunarDate.m */; };
 		4A2AABA115536E1C00526963 /* LunarCalendarWidgetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2A958F15536E1300526963 /* LunarCalendarWidgetController.m */; };
 		4A2AAC2615536E1D00526963 /* festival-lunar.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A2AA08F15536E1700526963 /* festival-lunar.plist */; };
 		4A2AAC2715536E1D00526963 /* festival-solar.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A2AA09015536E1700526963 /* festival-solar.plist */; };
@@ -29,6 +28,7 @@
 		4A2AACA615536E1D00526963 /* TLWeekWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2AAB8815536E1A00526963 /* TLWeekWidgetView.m */; };
 		4A2AACA715536E1D00526963 /* TLWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2AAB8A15536E1A00526963 /* TLWidgetView.m */; };
 		4A4392CA157C58F900BAFFDE /* solarterm.c in Sources */ = {isa = PBXBuildFile; fileRef = 4A4392C9157C58F900BAFFDE /* solarterm.c */; };
+		4A5CE121157E4693001DE556 /* lunardate.c in Sources */ = {isa = PBXBuildFile; fileRef = 4A5CE120157E4693001DE556 /* lunardate.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,8 +52,6 @@
 		4A2A956715536E0B00526963 /* TLCalendarDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLCalendarDisplay.h; sourceTree = "<group>"; };
 		4A2A956815536E0B00526963 /* TLCalendarScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLCalendarScrollView.h; sourceTree = "<group>"; };
 		4A2A956915536E0B00526963 /* TLCalendarScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLCalendarScrollView.m; sourceTree = "<group>"; };
-		4A2A956A15536E0B00526963 /* TLLunarDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLLunarDate.h; sourceTree = "<group>"; };
-		4A2A956B15536E0B00526963 /* TLLunarDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLLunarDate.m; sourceTree = "<group>"; };
 		4A2A957815536E1300526963 /* BBWeeAppController-Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBWeeAppController-Protocol.h"; sourceTree = "<group>"; };
 		4A2A958F15536E1300526963 /* LunarCalendarWidgetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LunarCalendarWidgetController.m; sourceTree = "<group>"; };
 		4A2AA08F15536E1700526963 /* festival-lunar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "festival-lunar.plist"; sourceTree = "<group>"; };
@@ -69,8 +67,10 @@
 		4A2AAB8815536E1A00526963 /* TLWeekWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLWeekWidgetView.m; sourceTree = "<group>"; };
 		4A2AAB8915536E1A00526963 /* TLWidgetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLWidgetView.h; sourceTree = "<group>"; };
 		4A2AAB8A15536E1A00526963 /* TLWidgetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLWidgetView.m; sourceTree = "<group>"; };
-		4A4392C7157C58EF00BAFFDE /* solarterm.h */ = {isa = PBXFileReference; fileEncoding = 4; path = solarterm.h; sourceTree = "<group>"; };
+		4A4392C7157C58EF00BAFFDE /* solarterm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = solarterm.h; sourceTree = "<group>"; };
 		4A4392C9157C58F900BAFFDE /* solarterm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = solarterm.c; sourceTree = "<group>"; };
+		4A5CE11E157E463C001DE556 /* lunardate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lunardate.h; sourceTree = "<group>"; };
+		4A5CE120157E4693001DE556 /* lunardate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lunardate.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,8 +150,8 @@
 				4A2A956715536E0B00526963 /* TLCalendarDisplay.h */,
 				4A2A956815536E0B00526963 /* TLCalendarScrollView.h */,
 				4A2A956915536E0B00526963 /* TLCalendarScrollView.m */,
-				4A2A956A15536E0B00526963 /* TLLunarDate.h */,
-				4A2A956B15536E0B00526963 /* TLLunarDate.m */,
+				4A5CE11E157E463C001DE556 /* lunardate.h */,
+				4A5CE120157E4693001DE556 /* lunardate.c */,
 				4A4392C7157C58EF00BAFFDE /* solarterm.h */,
 				4A4392C9157C58F900BAFFDE /* solarterm.c */,
 			);
@@ -260,7 +260,6 @@
 				4A2A956C15536E0B00526963 /* NSCalendarAdditons.m in Sources */,
 				4A2A956D15536E0B00526963 /* NSDateComponentsAdditions.m in Sources */,
 				4A2A956E15536E0B00526963 /* TLCalendarScrollView.m in Sources */,
-				4A2A956F15536E0B00526963 /* TLLunarDate.m in Sources */,
 				4A2AABA115536E1C00526963 /* LunarCalendarWidgetController.m in Sources */,
 				4A2AACA315536E1D00526963 /* TLDayWidgetView.m in Sources */,
 				4A2AACA415536E1D00526963 /* TLLunarCalendarWeeView.m in Sources */,
@@ -268,6 +267,7 @@
 				4A2AACA615536E1D00526963 /* TLWeekWidgetView.m in Sources */,
 				4A2AACA715536E1D00526963 /* TLWidgetView.m in Sources */,
 				4A4392CA157C58F900BAFFDE /* solarterm.c in Sources */,
+				4A5CE121157E4693001DE556 /* lunardate.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
