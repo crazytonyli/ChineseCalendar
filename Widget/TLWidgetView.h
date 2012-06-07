@@ -14,7 +14,7 @@
 @protocol TLWidgetViewDataSource <NSObject>
 
 - (NSString *)widgetView:(TLWidgetView *)view lunarFestivalForDate:(LunarDate)date;
-- (NSString *)widgetView:(TLWidgetView *)view solarFestivalForDateComponents:(NSDateComponents *)comp;
+- (NSString *)widgetView:(TLWidgetView *)view chineseFestivalForDateComponents:(NSDateComponents *)comp;
 
 @end
 
@@ -64,6 +64,8 @@ extern NSString * const kTLDatesAttributeKeyFestivalLunar;
 @property (nonatomic, retain) UIColor *notCurrentMonthDayColor;
 @property (nonatomic, retain) UIColor *todayHighlightColor;
 @property (nonatomic, retain) UIColor *festivalTextColor;
+
+- (void)prepareDates;
 
 - (NSDictionary *)datesAttributesForDateComponents:(NSDateComponents *)comp;
 

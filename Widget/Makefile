@@ -10,6 +10,7 @@ LunarCalendarWidget_FILES = LunarCalendarWidgetController.m \
 														../Common/lunardate.c \
 														../Common/solarterm.c \
 														../Common/TLCalendarScrollView.m \
+														../Common/TLFestivalsManager.m \
 														TLLunarCalendarWeeView.m \
 														TLMonthWidgetView.m \
 														TLWeekWidgetView.m \

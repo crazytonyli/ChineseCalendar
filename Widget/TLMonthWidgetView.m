@@ -47,42 +47,38 @@ int maxdaysofmonth(int year, int month);
     return self;
 }
 
-- (void)layoutSubviews {
-    if ([self isValidDateComponents:_dateComponents]) {
-        const static NSCalendarUnit unit = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit);
-        
-        // info about first days of month
-        NSDateComponents *comp = [_dateComponents copy];
-        comp.day = 1;
-        NSDate *firstDayOfMonth = [_calendar dateFromComponents:comp];
-        NSDateComponents *firstDayOfMonthComp = [_calendar components:unit fromDate:firstDayOfMonth];
-        [comp release];
-        
-        // info about first cell in TLMonthView
-        NSDateComponents *c = [[NSDateComponents alloc] init];
-        c.day = [_calendar firstWeekday] - firstDayOfMonthComp.weekday;
-        NSDate *firstDayInView = [_calendar dateByAddingComponents:c toDate:firstDayOfMonth options:0];
-        [c release];
-        
-        // columns of TLMonthView
-        if (_dates == nil) {
-            _dates = [[NSMutableDictionary alloc] initWithCapacity:(7 * kColumnsCount)];
-        } else {
-            [_dates removeAllObjects];
+- (void)prepareDates {
+    const static NSCalendarUnit unit = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit);
+    
+    // info about first days of month
+    NSDateComponents *comp = [_dateComponents copy];
+    comp.day = 1;
+    NSDate *firstDayOfMonth = [_calendar dateFromComponents:comp];
+    NSDateComponents *firstDayOfMonthComp = [_calendar components:unit fromDate:firstDayOfMonth];
+    [comp release];
+    
+    // info about first cell in TLMonthView
+    NSDateComponents *c = [[NSDateComponents alloc] init];
+    c.day = [_calendar firstWeekday] - firstDayOfMonthComp.weekday;
+    NSDate *firstDayInView = [_calendar dateByAddingComponents:c toDate:firstDayOfMonth options:0];
+    [c release];
+    
+    // columns of TLMonthView
+    if (_dates == nil) {
+        _dates = [[NSMutableDictionary alloc] initWithCapacity:(7 * kColumnsCount)];
+    } else {
+        [_dates removeAllObjects];
+    }
+    
+    const static NSTimeInterval DAY_INTERVAL = 24 * 60 * 60;
+    
+    for (int row = 0; row < 7; row++) {
+        for (int col = 0; col < kColumnsCount; col++) {
+            NSDate *date = [NSDate dateWithTimeInterval:(DAY_INTERVAL * (row + col * 7)) sinceDate:firstDayInView];
+            NSUInteger indexes[2] = {row, col};
+            [_dates setObject:[self datesAttributesForDateComponents:[_calendar components:unit fromDate:date]]
+                       forKey:[NSIndexPath indexPathWithIndexes:indexes length:2]];
         }
-        
-        const static NSTimeInterval DAY_INTERVAL = 24 * 60 * 60;
-
-        for (int row = 0; row < 7; row++) {
-            for (int col = 0; col < kColumnsCount; col++) {
-                NSDate *date = [NSDate dateWithTimeInterval:(DAY_INTERVAL * (row + col * 7)) sinceDate:firstDayInView];
-                NSUInteger indexes[2] = {row, col};
-                [_dates setObject:[self datesAttributesForDateComponents:[_calendar components:unit fromDate:date]]
-                           forKey:[NSIndexPath indexPathWithIndexes:indexes length:2]];
-            }
-        }
-        
-        [self setNeedsDisplay];
     }
 }
 
@@ -91,7 +87,7 @@ int maxdaysofmonth(int year, int month);
 }
 
 - (BOOL)isValidDateComponents:(NSDateComponents *)comp {
-    return comp.month <= 12 && comp.month > 0 && comp.day < 32 && comp.day > 0;
+    return comp.month <= 12 && comp.month > 0;
 }
 
 - (void)drawCompactStyle {

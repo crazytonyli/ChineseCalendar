@@ -3,6 +3,7 @@
 #import "TLWeekWidgetView.h"
 #import "TLDayWidgetView.h"
 #import "../Common/NSCalendarAdditons.h"
+#import "../Common/TLFestivalsManager.h"
 
 @interface TLLunarCalendarWeeView(/*PrivateMethod*/)
 
@@ -74,6 +75,8 @@
     }
     if (_calScrollView == nil) {
         _calScrollView = [[TLCalendarScrollView alloc] initWithFrame:self.bounds views:nil];
+        _calScrollView.chineseFestivals = [[TLFestivalsManager sharedInstance] chineseFestivals];
+        _calScrollView.lunarFestivals = [[TLFestivalsManager sharedInstance] lunarFestivals];
         [self addSubview:_calScrollView];
         [self applyViewType];
     }

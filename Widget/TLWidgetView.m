@@ -90,13 +90,18 @@ NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
 }
 
 - (void)setDateComponents:(NSDateComponents *)dateComponents {
-    if (![self containsDateComponents:dateComponents]) {
+    if (![self containsDateComponents:dateComponents] && [self isValidDateComponents:dateComponents]) {
         [_dateComponents release];
         _dateComponents = [dateComponents copy];
         
-        [self setNeedsLayout];
+        [self prepareDates];
+        
         [self setNeedsDisplay];
     }
+}
+
+- (void)prepareDates {
+    // Empty.
 }
 
 - (NSDictionary *)datesAttributesForDateComponents:(NSDateComponents *)comp {
@@ -113,7 +118,7 @@ NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
                  forKey:kTLDatesAttributeKeySolarTerm];
     }
 
-    NSString *fest = [_dataSource widgetView:self solarFestivalForDateComponents:comp];
+    NSString *fest = [_dataSource widgetView:self chineseFestivalForDateComponents:comp];
     if (fest) {
         [dict setObject:fest forKey:kTLDatesAttributeKeyFestivalSolar];
     }

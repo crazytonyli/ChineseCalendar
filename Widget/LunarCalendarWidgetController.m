@@ -121,10 +121,6 @@
     [self displayView];
 }
 
-- (void)viewDidAppear {
-    [_view.calendarView displayCurrentDateWithAnimation:NO];
-}
-
 - (void)willRotateToInterfaceOrientation:(int)interfaceOrientation {
     _view.frame = CGRectMake(0, 0, [self viewWidth], [self viewHeight]);
     [self displayView];

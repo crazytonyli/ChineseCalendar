@@ -16,12 +16,11 @@
     NSArray *_views;
     NSCalendar *_calendar;
     BOOL _needLayoutWidgets;
-    
-    NSDictionary *_solarFestival;
-    NSDictionary *_lunarFestival;
 }
 
 @property (nonatomic, copy) NSArray *views;
+@property (nonatomic, retain) NSDictionary *chineseFestivals;
+@property (nonatomic, retain) NSDictionary *lunarFestivals;
 
 - (id)initWithFrame:(CGRect)frame views:(NSArray *)views;
 

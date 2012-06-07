@@ -19,6 +19,9 @@
 
 @implementation TLCalendarScrollView
 
+@synthesize chineseFestivals=_chineseFestivals;
+@synthesize lunarFestivals=_lunarFestivals;
+
 - (id)initWithFrame:(CGRect)frame {
     return [self initWithFrame:frame views:nil];
 }
@@ -33,7 +36,7 @@
         int value = [key intValue];
         int month = value / 100;
         int day = value - month * 100;
-        [ret setObject:obj forKey:[NSNumber numberWithInt:((month << 5 | day))]];
+        [ret setObject:obj forKey:[NSNumber numberWithInt:(month * 100 + day)]];
     }];
     return ret;
 }
@@ -51,9 +54,6 @@
         self.views = views;
         
         _calendar = [[NSCalendar sharedCalendar] retain];
-        
-        _lunarFestival = [[self festivalWithPlist:@"festival-lunar"] retain];
-        _solarFestival = [[self festivalWithPlist:@"festival-solar"] retain];
     }
     return self;
 }
@@ -61,8 +61,8 @@
 - (void)dealloc {
     [_views release];
     [_calendar release];
-    [_lunarFestival release];
-    [_solarFestival release];
+    [_chineseFestivals release];
+    [_lunarFestivals release];
     
     [super dealloc];
 }
@@ -174,11 +174,11 @@
 #pragma mark - TLWidgetView data source
 
 - (NSString *)widgetView:(TLWidgetView *)view lunarFestivalForDate:(LunarDate)date {
-    return [_lunarFestival objectForKey:[NSNumber numberWithInt:((date.month << 5) | date.day)]];
+    return [_lunarFestivals objectForKey:[NSNumber numberWithInt:(date.month * 100 + date.day)]];
 }
 
-- (NSString *)widgetView:(TLWidgetView *)view solarFestivalForDateComponents:(NSDateComponents *)comp {
-    return [_solarFestival objectForKey:[NSNumber numberWithInt:(comp.month * 100 + comp.day)]];
+- (NSString *)widgetView:(TLWidgetView *)view chineseFestivalForDateComponents:(NSDateComponents *)comp {
+    return [_chineseFestivals objectForKey:[NSNumber numberWithInt:(comp.month * 100 + comp.day)]];
 }
 
 #pragma mark - Private methods

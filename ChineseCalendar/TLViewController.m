@@ -9,6 +9,7 @@
 #import "TLViewController.h"
 #import "TLCalendarScrollView.h"
 #import "TLLunarCalendarWeeView.h"
+#import "NSCalendarAdditons.h"
 #include "solarterm.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -28,6 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSCalendar sharedCalendar] setFirstWeekday:2];
     self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
     view = [[TLLunarCalendarWeeView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
     [view setViewType:TLLunarCalendarWeeViewWeekType];
