@@ -10,7 +10,6 @@
 #import "TLCalendarDisplay.h"
 
 @class TLCalendarScrollView;
-@class NSCalendar;
 
 @interface TLCalendarScrollView : UIScrollView<UIScrollViewDelegate> {
     NSArray *_views;

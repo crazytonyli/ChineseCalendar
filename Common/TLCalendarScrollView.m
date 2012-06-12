@@ -26,21 +26,6 @@
     return [self initWithFrame:frame views:nil];
 }
 
-
-- (NSDictionary *)festivalWithPlist:(NSString *)path {
-    // 0.003584
-    NSBundle *mainBundle = [NSBundle bundleForClass:[self class]];
-    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:[mainBundle pathForResource:path ofType:@"plist"]];
-    NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithCapacity:10];
-    [dict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        int value = [key intValue];
-        int month = value / 100;
-        int day = value - month * 100;
-        [ret setObject:obj forKey:[NSNumber numberWithInt:(month * 100 + day)]];
-    }];
-    return ret;
-}
-
 - (id)initWithFrame:(CGRect)frame views:(NSArray *)views {
     if ( (self = [super initWithFrame:frame]) ) {
         self.showsHorizontalScrollIndicator = NO;
@@ -63,7 +48,7 @@
     [_calendar release];
     [_chineseFestivals release];
     [_lunarFestivals release];
-    
+
     [super dealloc];
 }
 

@@ -85,7 +85,7 @@
     CGContextSetShadowWithColor(ctx, CGSizeMake(0, 1), 0, [UIColor blackColor].CGColor);
     
     // draw year/month
-    NSString *text = [NSString stringWithFormat:@"%d年%d月", _dateComponents.year, _dateComponents.month];
+    NSString *text = [NSString stringWithFormat:@"%d年(第%d周) %d月", _dateComponents.year, _dateComponents.weekOfYear, _dateComponents.month];
     CGRect capRect = CGRectMake(0, 0, size.width, _captionFont.lineHeight);
     [text drawInRect:capRect
             withFont:_captionFont
@@ -178,10 +178,7 @@
     NSDateComponents *diff = [[[NSDateComponents alloc] init] autorelease];
     diff.weekOfYear = 1;
     NSDate *current = [_calendar dateFromComponents:[self dateComponents]];
-    NSDate *date = [_calendar dateByAddingComponents:diff
-                                              toDate:current
-                                             options:0];
-    NSLog(@"Current: %@, Next: %@", current, date);
+    NSDate *date = [_calendar dateByAddingComponents:diff toDate:current options:0];
     return [_calendar components:CALENDAR_UNIT fromDate:date];
 }
 
