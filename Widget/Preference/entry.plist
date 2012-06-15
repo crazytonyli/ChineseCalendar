@@ -5,6 +5,6 @@
 		detail = LCWPListController;
 		icon = "/Library/WeeLoader/Plugins/LunarCalendarWidget.bundle/Icon-Small@2x.png";
 		isController = 1;
-		label = "\U519c\U5386 Widget";
+		label = "\U4e2d\U56fd\U519c\U5386";
 	};
 }
