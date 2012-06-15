@@ -85,7 +85,7 @@
     CGContextSetShadowWithColor(ctx, CGSizeMake(0, 1), 0, [UIColor blackColor].CGColor);
     
     // draw year/month
-    NSString *text = [NSString stringWithFormat:@"%d年(第%d周) %d月", _dateComponents.year, _dateComponents.weekOfYear, _dateComponents.month];
+    NSString *text = [NSString stringWithFormat:@"%d年第%d周 %d月", _dateComponents.year, _dateComponents.weekOfYear, _dateComponents.month];
     CGRect capRect = CGRectMake(0, 0, size.width, _captionFont.lineHeight);
     [text drawInRect:capRect
             withFont:_captionFont

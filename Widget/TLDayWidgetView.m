@@ -57,9 +57,11 @@
     LunarDate lunar = lunardate_from_solar(_dateComponents.year, _dateComponents.month, _dateComponents.day);
     char attr[4];
     lunardate_attribution(lunar.year, attr);
-    NSString *lunarText = [NSString stringWithFormat:@"农历%s%s年%s%s", attr,
-                           lunardate_zodiac(lunar.year), lunardate_month(lunar.month),
-                           lunardate_day(lunar.day)];
+    NSString *lunarText = [NSString stringWithFormat:@"农历%@%@年%@%@",
+                           [NSString stringWithUTF8String:attr],
+                           [NSString stringWithUTF8String:lunardate_zodiac(lunar.year)],
+                           [NSString stringWithUTF8String:lunardate_month(lunar.month)],
+                           [NSString stringWithUTF8String:lunardate_day(lunar.day)]];
     drawRect.size = [lunarText sizeWithFont:_lunarDayFont constrainedToSize:rect.size];
     drawRect.origin.x = roundf((rect.size.width - drawRect.size.width) / 2);
     drawRect.origin.y += _captionFont.lineHeight;
