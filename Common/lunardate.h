@@ -22,6 +22,7 @@ const char *lunardate_day(int lunarday);
 const char *lunardate_month(int lunarmonth);
 const char *lunardate_zodiac(int lunaryear);
 
-char *lunardate_attribution(int lunaryear, char *dest);
+const char *lunardate_tiangan(int lunaryear);
+const char *lunardate_dizhi(int lunaryear);
 
 #endif

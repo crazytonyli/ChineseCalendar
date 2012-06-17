@@ -124,10 +124,12 @@ const char *lunardate_zodiac(int lunaryear) {
     return chinese_zodiac[(lunaryear - 4) % 12];
 }
 
-char *lunardate_attribution(int lunaryear, char *dest) {
-    strcpy(dest, chinese_tigan[(lunaryear - 4) % 10]);
-    strcat(dest, chinese_dizhi[(lunaryear - 4) % 12]);
-    return dest;
+const char *lunardate_tiangan(int lunaryear) {
+    return chinese_tigan[(lunaryear - 4) % 10];
+}
+
+const char *lunardate_dizhi(int lunaryear) {
+    return chinese_dizhi[(lunaryear - 4) % 12];
 }
 
 
