@@ -112,7 +112,15 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>升级</string>
+			<string>支持</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>通过支付宝捐赠</string>
+			<key>action</key>
+			<string>donate</string>
 		</dict>
 		<dict>
 			<key>cell</key>

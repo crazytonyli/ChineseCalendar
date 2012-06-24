@@ -57,7 +57,7 @@
 - (void)buyPro {
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     if (window) {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"购买Pro版" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"在淘宝中购买", @"在Cydia中购买", nil];
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"购买Pro版" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从淘宝购买", @"从Cydia购买", nil];
         [sheet showInView:window];
         [sheet release];
     }

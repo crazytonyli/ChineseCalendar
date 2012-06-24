@@ -23,10 +23,10 @@ int maxdaysofmonth(int year, int month);
     CGFloat height = 0;
     switch (style) {
         case TLMonthWidgetViewCompactStyle:
-            height = 126.0f;
+            height = 130.0f;
             break;
         case TLMonthWidgetViewLooseStyle:
-            height = 202.0f;
+            height = 197.0f;
         default:
             break;
     }
@@ -290,10 +290,10 @@ int maxdaysofmonth(int year, int month);
     
     switch (style) {
         case TLMonthWidgetViewCompactStyle:
-            _dayCellSize = CGSizeMake(44, 15);
+            _dayCellSize = CGSizeMake(44, 16);
             break;
         case TLMonthWidgetViewLooseStyle:
-            _dayCellSize = CGSizeMake(36, 28);
+            _dayCellSize = CGSizeMake(36, 27);
             break;
         default:
             break;
