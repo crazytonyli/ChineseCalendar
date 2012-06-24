@@ -1,6 +1,6 @@
 #import "LCWSettingsController.h"
 
-@interface LCWPListController : LCWSettingsController {
+@interface LCWPListController : LCWSettingsController<UIActionSheetDelegate> {
 }
 @end
 
@@ -26,7 +26,7 @@
 #pragma mark - Getters
 
 - (NSString *)widgetVersion {
-    return @"0.3";
+    return @"1.0";
 }
 
 - (NSString *)username {
@@ -52,6 +52,39 @@
 
 - (void)donate {
   [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://me.alipay.com/cyntin"]];
+}
+
+- (void)buyPro {
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    if (window) {
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"购买Pro版" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"在淘宝中购买", @"在Cydia中购买", nil];
+        [sheet showInView:window];
+        [sheet release];
+    }
+}
+
+- (void)buyViaCydia {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"cydia://package/com.crazytonyli.chinesecalendarpro"]];
+}
+
+- (void)buyViaTaobao {
+    UIApplication *app = [UIApplication sharedApplication];
+    NSURL *clientURL = [NSURL URLWithString:@"taobao://item.taobao.com/item.htm?id=18270676555"];
+    if ([app canOpenURL:clientURL]) {
+           [app openURL:clientURL];
+    } else {
+        [app openURL:[NSURL URLWithString:@"http://item.taobao.com/item.htm?id=18270676555"]];
+    }
+}
+
+#pragma mark - ActionSheet delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [self buyViaTaobao];
+    } else if (buttonIndex == 1) {
+        [self buyViaCydia];
+    }
 }
 
 @end

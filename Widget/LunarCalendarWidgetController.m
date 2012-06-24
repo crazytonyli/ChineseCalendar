@@ -49,8 +49,8 @@
 - (void)loadFullView {
     if (_view.calendarView == nil) {
         [_view setupCalendarView];
-        [self displayView];
     }
+    [self displayView];
 }
 
 - (UIView *)view {
@@ -95,6 +95,8 @@
                 [current setNeedsLayout];
             }
         }
+        
+        [calView setNeedsLayoutWidgets];
     }
 }
 
@@ -118,12 +120,10 @@
 
 - (void)viewWillAppear {
     _view.frame = CGRectMake(0, 0, [self viewWidth], [self viewHeight]);
-    [self displayView];
 }
 
 - (void)willRotateToInterfaceOrientation:(int)interfaceOrientation {
     _view.frame = CGRectMake(0, 0, [self viewWidth], [self viewHeight]);
-    [self displayView];
 }
 
 - (TLLunarCalendarWeeViewType)viewType {

@@ -11,7 +11,7 @@
 #import "../Common/NSDateComponentsAdditions.h"
 #import "../Common/NSCalendarAdditons.h"
 
-#define kColumnsCount 5
+#define kColumnsCount 6
 
 int maxdaysofmonth(int year, int month);
 
@@ -23,10 +23,10 @@ int maxdaysofmonth(int year, int month);
     CGFloat height = 0;
     switch (style) {
         case TLMonthWidgetViewCompactStyle:
-            height = 112.0f;
+            height = 126.0f;
             break;
         case TLMonthWidgetViewLooseStyle:
-            height = 176.0f;
+            height = 202.0f;
         default:
             break;
     }
@@ -60,6 +60,9 @@ int maxdaysofmonth(int year, int month);
     // info about first cell in TLMonthView
     NSDateComponents *c = [[NSDateComponents alloc] init];
     c.day = [_calendar firstWeekday] - firstDayOfMonthComp.weekday;
+    if (c.day > 0) {
+        c.day = c.day - 7;
+    }
     NSDate *firstDayInView = [_calendar dateByAddingComponents:c toDate:firstDayOfMonth options:0];
     [c release];
     

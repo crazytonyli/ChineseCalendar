@@ -111,16 +111,16 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>您的捐赠会让我保持开发的动力。谢谢！</string>
+			<key>label</key>
+			<string>升级</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>label</key>
-			<string>通过支付宝捐赠</string>
+			<string>购买Pro版</string>
 			<key>action</key>
-			<string>donate</string>
+			<string>buyPro</string>
 		</dict>
 		<dict>
 			<key>cell</key>

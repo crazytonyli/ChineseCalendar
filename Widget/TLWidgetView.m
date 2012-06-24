@@ -90,14 +90,14 @@ NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
 }
 
 - (void)setDateComponents:(NSDateComponents *)dateComponents {
-    if (![self containsDateComponents:dateComponents] && [self isValidDateComponents:dateComponents]) {
+//    if (![self containsDateComponents:dateComponents] && [self isValidDateComponents:dateComponents]) {
         [_dateComponents release];
         _dateComponents = [dateComponents copy];
         
         [self prepareDates];
         
         [self setNeedsDisplay];
-    }
+//    }
 }
 
 - (void)prepareDates {
@@ -161,11 +161,7 @@ NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
             }
         }
     } else {
-        if (festival) {
-            color = _festivalTextColor.CGColor;
-        } else {
-            color = _notCurrentMonthDayColor.CGColor;
-        }
+        color = _notCurrentMonthDayColor.CGColor;
     }
     CGContextSetFillColorWithColor(ctx, color);
     CGContextSetStrokeColorWithColor(ctx, color);
