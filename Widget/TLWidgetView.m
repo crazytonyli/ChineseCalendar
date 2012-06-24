@@ -90,14 +90,12 @@ NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
 }
 
 - (void)setDateComponents:(NSDateComponents *)dateComponents {
-//    if (![self containsDateComponents:dateComponents] && [self isValidDateComponents:dateComponents]) {
-        [_dateComponents release];
-        _dateComponents = [dateComponents copy];
-        
-        [self prepareDates];
-        
-        [self setNeedsDisplay];
-//    }
+    [_dateComponents release];
+    _dateComponents = [dateComponents copy];
+    
+    [self prepareDates];
+    
+    [self setNeedsDisplay];
 }
 
 - (void)prepareDates {
