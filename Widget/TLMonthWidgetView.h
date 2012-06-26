@@ -19,8 +19,9 @@ typedef enum {
     CGSize _dayCellSize;
 }
 
-+ (CGFloat)minHeightForStyle:(TLMonthWidgetViewStyle)style;
++ (CGFloat)minHeightForStyle:(TLMonthWidgetViewStyle)style fullColumns:(BOOL)full;
 
 @property (nonatomic, assign) TLMonthWidgetViewStyle style;
+@property (nonatomic, assign) int rowCount;
 
 @end

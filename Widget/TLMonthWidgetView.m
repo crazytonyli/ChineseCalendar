@@ -11,22 +11,21 @@
 #import "../Common/NSDateComponentsAdditions.h"
 #import "../Common/NSCalendarAdditons.h"
 
-#define kColumnsCount 6
-
 int maxdaysofmonth(int year, int month);
 
 @implementation TLMonthWidgetView
 
-@synthesize style=_style;
+@synthesize style=_style, rowCount=_rowCount;
 
-+ (CGFloat)minHeightForStyle:(TLMonthWidgetViewStyle)style {
++ (CGFloat)minHeightForStyle:(TLMonthWidgetViewStyle)style fullColumns:(BOOL)full {
     CGFloat height = 0;
     switch (style) {
         case TLMonthWidgetViewCompactStyle:
-            height = 130.0f;
+            height = full ? 130.f : 116.f;
             break;
         case TLMonthWidgetViewLooseStyle:
-            height = 197.0f;
+            height = full ? 197.f : 170.f;
+            break;
         default:
             break;
     }
@@ -43,6 +42,7 @@ int maxdaysofmonth(int year, int month);
     if (self) {
         // Initialization code
         self.style = TLMonthWidgetViewCompactStyle;
+        _rowCount = 6;
     }
     return self;
 }
@@ -68,7 +68,7 @@ int maxdaysofmonth(int year, int month);
     
     // columns of TLMonthView
     if (_dates == nil) {
-        _dates = [[NSMutableDictionary alloc] initWithCapacity:(7 * kColumnsCount)];
+        _dates = [[NSMutableDictionary alloc] initWithCapacity:(7 * _rowCount)];
     } else {
         [_dates removeAllObjects];
     }
@@ -76,7 +76,7 @@ int maxdaysofmonth(int year, int month);
     const static NSTimeInterval DAY_INTERVAL = 24 * 60 * 60;
     
     for (int row = 0; row < 7; row++) {
-        for (int col = 0; col < kColumnsCount; col++) {
+        for (int col = 0; col < _rowCount; col++) {
             NSDate *date = [NSDate dateWithTimeInterval:(DAY_INTERVAL * (row + col * 7)) sinceDate:firstDayInView];
             NSUInteger indexes[2] = {row, col};
             [_dates setObject:[self datesAttributesForDateComponents:[_calendar components:unit fromDate:date]]
@@ -119,7 +119,7 @@ int maxdaysofmonth(int year, int month);
                                                 fromDate:[NSDate date]];
     CGFloat y = CGRectGetMaxY(weekdayRect);
     for (int row = 0; row < 7; row++) {
-        for (int col = 0; col < kColumnsCount; col++) {
+        for (int col = 0; col < _rowCount; col++) {
             CGFloat colX = x + row * weekdayRect.size.width;
             CGFloat colY = y + col * _dayCellSize.height;
             NSUInteger indexes[2] = { row, col };
@@ -200,7 +200,7 @@ int maxdaysofmonth(int year, int month);
     NSDateComponents *todayComps = [_calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit)
                                                 fromDate:[NSDate date]];
     for (int row = 0; row < 7; row++) {
-        for (int col = 0; col < kColumnsCount; col++) {
+        for (int col = 0; col < _rowCount; col++) {
             weekdayRect.origin = CGPointMake(x + row * weekdayRect.size.width, y + col * weekdayRect.size.height);
             NSUInteger indexes[2] = { row, col };
             NSDictionary *dict = [_dates objectForKey:[NSIndexPath indexPathWithIndexes:indexes length:2]];

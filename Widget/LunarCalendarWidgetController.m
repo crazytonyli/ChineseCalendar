@@ -30,6 +30,7 @@
 
 - (TLLunarCalendarWeeViewType)viewType;
 - (TLMonthWidgetViewStyle)monthViewStyle;
+- (int)monthViewRowCount;
 - (NSUInteger)firstDayOfWeek;
 
 @end
@@ -88,9 +89,11 @@
             NSArray *views = calView.views;
             TLMonthWidgetView *current = [views objectAtIndex:1];
             TLMonthWidgetViewStyle style = [self monthViewStyle];
+            int rowCount = [self monthViewRowCount];
             if (style != [current style]) {
                 for (TLMonthWidgetView *view in views) {
                     view.style = style;
+                    view.rowCount = rowCount;
                 }
                 [current setNeedsLayout];
             }
@@ -110,7 +113,7 @@
             height = [TLWeekWidgetView minHeight];
             break;
         case TLLunarCalendarWeeViewMonthType:
-            height = [TLMonthWidgetView minHeightForStyle:[self monthViewStyle]];
+            height = [TLMonthWidgetView minHeightForStyle:[self monthViewStyle] fullColumns:([self monthViewRowCount] == 6)];
             break;
         default:
             break;
@@ -151,6 +154,20 @@
         return style;
     } else {
         return TLMonthWidgetViewLooseStyle;
+    }
+}
+
+- (int)monthViewRowCount {
+    CFStringRef appId = APPID_CFSTR;
+    CFPreferencesSynchronize(appId, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
+    CFPropertyListRef value = CFPreferencesCopyValue(CFSTR("monthRows"), appId, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
+    if (value) {
+        int style = 6;
+        CFNumberGetValue(value, kCFNumberIntType, &style);
+        CFRelease(value);
+        return style;
+    } else {
+        return 6;
     }
 }
 

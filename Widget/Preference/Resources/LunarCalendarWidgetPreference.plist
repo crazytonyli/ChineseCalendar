@@ -45,6 +45,8 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>布局设置</string>
+            <key>footerText></key>
+            <string>月份一般需要六行才能完整显示。如果使用五行显示，那么某些月份的最后两天有可能无法显示。</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -106,6 +108,30 @@
 			<array>
 				<string>紧凑视图</string>
 				<string>宽松视图</string>
+			</array>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>label</key>
+			<string>月视图行数</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>default</key>
+			<integer>6</integer>
+			<key>key</key>
+			<string>monthRows</string>
+			<key>defaults</key>
+			<string>tonyli.lunarcalendar.widget</string>
+			<key>validValues</key>
+			<array>
+				<integer>5</integer>
+				<integer>6</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>五行</string>
+				<string>六行</string>
 			</array>
 		</dict>
 		<dict>
