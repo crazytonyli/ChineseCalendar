@@ -20,11 +20,19 @@
 @property (nonatomic, copy) NSArray *views;
 @property (nonatomic, retain) NSDictionary *chineseFestivals;
 @property (nonatomic, retain) NSDictionary *lunarFestivals;
+@property (nonatomic, assign) BOOL showsSolarTerm;
 
 - (id)initWithFrame:(CGRect)frame views:(NSArray *)views;
 
-- (void)displayCurrentDateWithAnimation:(BOOL)animted;
+- (void)displayDate:(NSDate *)date;
+- (void)displayDate:(NSDate *)date animated:(BOOL)animated;
+- (BOOL)isDateShown:(NSDate *)date;
 
 - (void)setNeedsLayoutWidgets;
+
+- (NSDateComponents *)dateComponents;
+
+- (NSString *)eventIdentifierForDayAtPoint:(CGPoint)point;
+- (NSDateComponents *)dayAtPoint:(CGPoint)point;
 
 @end

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A283AAE159FEF9F008880ED /* TLCalendarDisplayAttributeKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A283AAB159FEF9F008880ED /* TLCalendarDisplayAttributeKeys.m */; };
+		4A283AAF159FEF9F008880ED /* TLPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A283AAD159FEF9F008880ED /* TLPreferences.m */; };
 		4A2A954615536D7000526963 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2A954515536D7000526963 /* UIKit.framework */; };
 		4A2A954815536D7000526963 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2A954715536D7000526963 /* Foundation.framework */; };
 		4A2A954A15536D7000526963 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2A954915536D7000526963 /* CoreGraphics.framework */; };
@@ -31,6 +33,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A283AAA159FEF9F008880ED /* TLCalendarDisplayAttributeKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLCalendarDisplayAttributeKeys.h; sourceTree = "<group>"; };
+		4A283AAB159FEF9F008880ED /* TLCalendarDisplayAttributeKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLCalendarDisplayAttributeKeys.m; sourceTree = "<group>"; };
+		4A283AAC159FEF9F008880ED /* TLPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLPreferences.h; sourceTree = "<group>"; };
+		4A283AAD159FEF9F008880ED /* TLPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLPreferences.m; sourceTree = "<group>"; };
 		4A2A954115536D7000526963 /* ChineseCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChineseCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A2A954515536D7000526963 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4A2A954715536D7000526963 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -151,10 +157,14 @@
 				4A4392C9157C58F900BAFFDE /* solarterm.c */,
 				4A4392C7157C58EF00BAFFDE /* solarterm.h */,
 				4A2A956715536E0B00526963 /* TLCalendarDisplay.h */,
+				4A283AAA159FEF9F008880ED /* TLCalendarDisplayAttributeKeys.h */,
+				4A283AAB159FEF9F008880ED /* TLCalendarDisplayAttributeKeys.m */,
 				4A2A956815536E0B00526963 /* TLCalendarScrollView.h */,
 				4A2A956915536E0B00526963 /* TLCalendarScrollView.m */,
 				4A9F2BF4157F5B67004AAEE2 /* TLFestivalsManager.h */,
 				4A9F2BF5157F5B67004AAEE2 /* TLFestivalsManager.m */,
+				4A283AAC159FEF9F008880ED /* TLPreferences.h */,
+				4A283AAD159FEF9F008880ED /* TLPreferences.m */,
 			);
 			path = Common;
 			sourceTree = SOURCE_ROOT;
@@ -266,6 +276,8 @@
 				4A4392CA157C58F900BAFFDE /* solarterm.c in Sources */,
 				4A5CE121157E4693001DE556 /* lunardate.c in Sources */,
 				4A9F2BF6157F5B67004AAEE2 /* TLFestivalsManager.m in Sources */,
+				4A283AAE159FEF9F008880ED /* TLCalendarDisplayAttributeKeys.m in Sources */,
+				4A283AAF159FEF9F008880ED /* TLPreferences.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

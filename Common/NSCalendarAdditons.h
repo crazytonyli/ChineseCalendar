@@ -12,6 +12,6 @@
 
 + (id)sharedCalendar;
 
-- (NSArray *)chineseWeekdaysWithPrefix:(NSString *)prefix;
+- (NSArray *)chineseWeekdays;
 
 @end

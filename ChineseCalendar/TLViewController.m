@@ -13,64 +13,77 @@
 #include "solarterm.h"
 #import <QuartzCore/QuartzCore.h>
 
+#define WeePerfromSEL(sel) if ([_weeAppController respondsToSelector:sel]) [_weeAppController performSelector:sel];
+
 @implementation TLViewController
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-        
-    [view.calendarView displayCurrentDateWithAnimation:YES];
     
     // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
 
+- (void)loadView {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 20, 320, 460)];
+    view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"notificationcenter_bg"]];
+    self.view = view;
+    [view release];
+    
+    _weeAppController = [[NSClassFromString(@"LunarCalendarWidgetController") alloc] init];
+    UIView *weeView = [_weeAppController view];
+    weeView.frame = CGRectMake(0, 0, 320, [_weeAppController viewHeight]);
+    [self.view addSubview:weeView];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[NSCalendar sharedCalendar] setFirstWeekday:2];
-    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-    view = [[TLLunarCalendarWeeView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
-    [view setViewType:TLLunarCalendarWeeViewWeekType];
-    [view setupCalendarView];
-    view.layer.borderColor = [UIColor whiteColor].CGColor;
-    view.layer.borderWidth = 2.0f;
-    [self.view addSubview:view];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    [_weeAppController loadFullView];
 }
-
-/*
- 0-4 春分日期
- 5-6 春分月份
- 0-13
- */
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    
+    WeePerfromSEL(@selector(unloadView));
+    [_weeAppController release];
+    _weeAppController = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    WeePerfromSEL(@selector(viewWillAppear));
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    WeePerfromSEL(@selector(viewDidAppear));
+    
+    WeePerfromSEL(@selector(loadFullView));
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
+    
+    WeePerfromSEL(@selector(viewWillDisappear));
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
+    
+    WeePerfromSEL(@selector(viewDidDisappear));
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

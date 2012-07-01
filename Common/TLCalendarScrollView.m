@@ -8,12 +8,15 @@
 
 #import "TLCalendarScrollView.h"
 #import "NSCalendarAdditons.h"
-#import "../Widget/TLWidgetView.h"
+#import "TLCalendarDisplayAttributeKeys.h"
 #include "lunardate.h"
+#include "solarterm.h"
 
-@interface TLCalendarScrollView(/*PrivateMethods*/)<TLWidgetViewDataSource>
+@interface TLCalendarScrollView(/*PrivateMethods*/)
 
 - (void)layoutWidgets;
+- (void)setupDsiplay:(id<TLCalendarDisplay>)display withDateComponent:(NSDateComponents *)comp;
+- (NSMutableArray *)attributesForDisplay:(id<TLCalendarDisplay>)display;
 
 @end
 
@@ -21,6 +24,7 @@
 
 @synthesize chineseFestivals=_chineseFestivals;
 @synthesize lunarFestivals=_lunarFestivals;
+@synthesize showsSolarTerm=_showsSolarTerm;
 
 - (id)initWithFrame:(CGRect)frame {
     return [self initWithFrame:frame views:nil];
@@ -53,13 +57,16 @@
 }
 
 - (void)setFrame:(CGRect)frame {
-    [super setFrame:frame];
-    self.contentSize = CGSizeMake(frame.size.width * 3, frame.size.height);
-    self.contentOffset = CGPointMake(frame.size.width, 0);
-    [[_views objectAtIndex:0] setFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-    [[_views objectAtIndex:1] setFrame:CGRectMake(frame.size.width, 0, frame.size.width, frame.size.height)];
-    [[_views objectAtIndex:2] setFrame:CGRectMake(frame.size.width * 2, 0, frame.size.width, frame.size.height)];
-    [[_views objectAtIndex:1] setNeedsDisplay];
+    if (!CGRectEqualToRect(self.frame, frame)) {
+        [super setFrame:frame];
+        
+        self.contentSize = CGSizeMake(frame.size.width * 3, frame.size.height);
+        self.contentOffset = CGPointMake(frame.size.width, 0);
+        [[_views objectAtIndex:0] setFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        [[_views objectAtIndex:1] setFrame:CGRectMake(frame.size.width, 0, frame.size.width, frame.size.height)];
+        [[_views objectAtIndex:2] setFrame:CGRectMake(frame.size.width * 2, 0, frame.size.width, frame.size.height)];
+        [[_views objectAtIndex:1] setNeedsDisplay];
+    }
 }
 
 - (void)layoutSubviews {
@@ -94,10 +101,9 @@
             frame.size = self.bounds.size;
             frame.origin.y = 0;
             for (int i = 0; i < [views count]; i++) {
-                TLWidgetView *view = [views objectAtIndex:i];
+                UIView *view = [views objectAtIndex:i];
                 frame.origin.x = i * frame.size.width;
                 view.userInteractionEnabled = NO;
-                view.dataSource = self;
                 [self addSubview:view];
             }
             
@@ -106,10 +112,39 @@
     }
 }
 
-- (void)displayCurrentDateWithAnimation:(BOOL)animated {
+- (void)setChineseFestivals:(NSDictionary *)chineseFestivals {
+    if (_chineseFestivals != chineseFestivals) {
+        [_chineseFestivals release];
+        _chineseFestivals = [chineseFestivals retain];
+        
+        [self setNeedsLayoutWidgets];
+    }
+}
+
+- (void)setLunarFestivals:(NSDictionary *)lunarFestivals {
+    if (_lunarFestivals != lunarFestivals) {
+        [_lunarFestivals release];
+        _lunarFestivals = [lunarFestivals retain];
+        
+        [self setNeedsLayoutWidgets];
+    }
+}
+
+- (void)setShowsSolarTerm:(BOOL)showsSolarTerm {
+    if (_showsSolarTerm != showsSolarTerm) {
+        _showsSolarTerm = showsSolarTerm;
+        [self setNeedsLayoutWidgets];
+    }
+}
+
+- (void)displayDate:(NSDate *)date {
+    [self displayDate:date animated:YES];
+}
+
+- (void)displayDate:(NSDate *)date animated:(BOOL)animated {
     if (_views) {
         id<TLCalendarDisplay> current = [_views objectAtIndex:1];
-        NSDateComponents *comp = [_calendar components:[current calendarUnit] fromDate:[NSDate date]];
+        NSDateComponents *comp = [_calendar components:[current calendarUnit] fromDate:date];
         UIView<TLCalendarDisplay> *targetView = nil;
         switch ([current compareWithDateComponents:comp]) {
             case NSOrderedAscending: // 今天(comp)在当前显示月之后
@@ -123,7 +158,7 @@
         }
         
         if (targetView) {
-            [targetView setDateComponents:comp];
+            [self setupDsiplay:targetView withDateComponent:comp];
             [self scrollRectToVisible:targetView.frame animated:animated];
             
             if (!animated) {
@@ -135,9 +170,36 @@
     }
 }
 
+- (BOOL)isDateShown:(NSDate *)date {
+    id<TLCalendarDisplay> current = [_views objectAtIndex:1];
+    NSDateComponents *comp = [_calendar components:[current calendarUnit] fromDate:date];
+    return [current compareWithDateComponents:comp] == NSOrderedSame;
+}
+
 - (void)setNeedsLayoutWidgets {
     _needLayoutWidgets = YES;
     [self setNeedsLayout];
+}
+
+- (NSDateComponents *)dateComponents {
+    return [[_views objectAtIndex:1] dateComponents];
+}
+
+- (NSString *)eventIdentifierForDayAtPoint:(CGPoint)point {
+    UIView<TLCalendarDisplay> *display = [_views objectAtIndex:1];
+    NSUInteger index = [display dayIndexAtPoint:[self convertPoint:point toView:display]];
+    NSString *eid = nil;
+    if (index != NSNotFound) {
+        NSDateComponents *dayComp = [[[display dateAttributes] objectAtIndex:index] objectForKey:kTLDatesAttributeKeyDate];
+        eid = [[display events] objectForKey:dayComp];
+    }
+    return eid;
+}
+
+- (NSDateComponents *)dayAtPoint:(CGPoint)point {
+    UIView<TLCalendarDisplay> *display = [_views objectAtIndex:1];
+    NSUInteger index = [display dayIndexAtPoint:[self convertPoint:point toView:display]];
+    return index != NSNotFound ? [[[display dateAttributes] objectAtIndex:index] objectForKey:kTLDatesAttributeKeyDate] : nil;
 }
 
 #pragma mark - UIScrollView delegate
@@ -154,16 +216,6 @@
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     [self setNeedsLayoutWidgets];
-}
-
-#pragma mark - TLWidgetView data source
-
-- (NSString *)widgetView:(TLWidgetView *)view lunarFestivalForDate:(LunarDate)date {
-    return [_lunarFestivals objectForKey:[NSNumber numberWithInt:(date.month * 100 + date.day)]];
-}
-
-- (NSString *)widgetView:(TLWidgetView *)view chineseFestivalForDateComponents:(NSDateComponents *)comp {
-    return [_chineseFestivals objectForKey:[NSNumber numberWithInt:(comp.month * 100 + comp.day)]];
 }
 
 #pragma mark - Private methods
@@ -204,10 +256,62 @@
         
         self.contentOffset = CGPointMake(size.width, 0);
         
-        [current setDateComponents:currentComponents];
-        [prev setDateComponents:[current previousDateComponents]];
-        [next setDateComponents:[current nextDateComponents]];
+        [self setupDsiplay:current withDateComponent:currentComponents];
+        [self setupDsiplay:prev withDateComponent:[current previousDateComponents]];
+        [self setupDsiplay:next withDateComponent:[current nextDateComponents]];
     }
+}
+
+- (void)setupDsiplay:(id<TLCalendarDisplay>)display withDateComponent:(NSDateComponents *)comp {
+    [display setDateComponents:comp];
+    [display setDateAttributes:[self attributesForDisplay:display]];
+}
+
+- (NSMutableArray *)attributesForDisplay:(id<TLCalendarDisplay>)display {
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:40];
+    
+    const NSTimeInterval DAY_INTERVAL = 24 * 60 * 60;
+    NSInteger days = [display numberOfDays];
+    NSDate *start = [_calendar dateFromComponents:[display firstDay]];
+    for (NSInteger i = 0; i < days; i++) {
+        NSDate *date = [NSDate dateWithTimeInterval:(DAY_INTERVAL * i) sinceDate:start];
+        NSDateComponents *day = [_calendar components:[display calendarUnit] fromDate:date];
+        
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:8];
+        [dict setObject:day forKey:kTLDatesAttributeKeyDate];
+        
+        LunarDate lunar = lunardate_from_solar(day.year, day.month, day.day);
+        NSString *lunarDesc = [NSString stringWithUTF8String:(lunar.day == 1 ? lunardate_month(lunar.month) : lunardate_day(lunar.day))];
+        [dict setObject:lunarDesc forKey:kTLDatesAttributeKeyLunarDate];
+        
+        if (_showsSolarTerm) {
+            int solar = solarterm_index(day.year, day.month, day.day);
+            if (solar >= 0 && solar < 24) {
+                [dict setObject:[NSString stringWithCString:solarterm_name(solar) encoding:NSUTF8StringEncoding]
+                         forKey:kTLDatesAttributeKeySolarTerm];
+            }
+        }
+        
+        if (_chineseFestivals) {
+            NSString *fest = [_chineseFestivals objectForKey:[NSNumber numberWithInt:(day.month * 100 + day.day)]];
+            if (fest) {
+                [dict setObject:fest forKey:kTLDatesAttributeKeyFestivalSolar];
+            }
+        }
+        
+        if (_lunarFestivals) {
+            NSString *fest = [_lunarFestivals objectForKey:[NSNumber numberWithInt:(lunar.month * 100 + lunar.day)]];
+            if (fest) {
+                [dict setObject:fest forKey:kTLDatesAttributeKeyFestivalLunar];
+            }
+        }
+        
+        [array addObject:dict];
+        
+        [dict release];
+
+    }
+    return array;
 }
 
 @end

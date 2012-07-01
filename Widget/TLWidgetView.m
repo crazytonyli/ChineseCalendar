@@ -9,34 +9,31 @@
 #import "TLWidgetView.h"
 #import "../Common/NSCalendarAdditons.h"
 #import "../Common/NSDateComponentsAdditions.h"
+#import "../Common/TLCalendarDisplayAttributeKeys.h"
+#import "../Common/TLPreferences.h"
 #include "../Common/lunardate.h"
 #include "../Common/solarterm.h"
 
 #define UIColorMakeWithRGBValue(value) \
 [UIColor colorWithRed:((value >> 16) / 255.0) green:(((value & 0x00ff00) >> 8) / 255.0) blue:((value & 0x0000ff) / 255.0) alpha:1.0]
 
-
-NSString * const kTLDatesAttributeKeyDate = @"date";
-NSString * const kTLDatesAttributeKeyLunarDate = @"date.lunar";
-NSString * const kTLDatesAttributeKeySolarTerm = @"solarterm";
-NSString * const kTLDatesAttributeKeyFestivalSolar = @"fest.solar";
-NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
-
 @implementation TLWidgetView
 
-@synthesize dataSource=_dataSource;
+@synthesize dateComponents=_dateComponents;
 @synthesize backgroundImage=_backgroundImage;
 @synthesize captionFont=_captionFont;
 @synthesize weekdayFont=_weekdayFont;
 @synthesize dayFont=_dayFont;
 @synthesize lunarDayFont=_lunarDayFont;
-@synthesize textColor=_textColor;
+@synthesize captionTextColor=_captionTextColor;
 @synthesize weekdayTextColor=_weekdayTextColor;
 @synthesize weekendTextColor=_weekendTextColor;
 @synthesize currentMonthDayColor=_currentMonthDayColor;
 @synthesize notCurrentMonthDayColor=_notCurrentMonthDayColor;
 @synthesize todayHighlightColor=_todayHighlightColor;
 @synthesize festivalTextColor=_festivalTextColor;
+@synthesize solarTermTextColor=_solarTermTextColor;
+@synthesize eventHintColor=_eventHintColor;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -50,7 +47,7 @@ NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
         _weekdayFont = [[UIFont boldSystemFontOfSize:12.0f] retain];
         _dayFont = [[UIFont boldSystemFontOfSize:12.0f] retain];
         _lunarDayFont = [[UIFont boldSystemFontOfSize:8.0f] retain];
-        _textColor = [[UIColor whiteColor] retain];
+        _captionTextColor = [[UIColor whiteColor] retain];
         _weekdayTextColor = [UIColorMakeWithRGBValue(0x8F9AD6) retain];
         _weekendTextColor = [UIColorMakeWithRGBValue(0xF9E794) retain];
         _currentMonthDayColor = [[UIColor whiteColor] retain];
@@ -64,7 +61,7 @@ NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
 }
 
 - (void)dealloc {
-    [_dates release];
+    [_dateAttributes release];
     [_dateComponents release];
     [_calendar release];
     
@@ -72,60 +69,45 @@ NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
     [_weekdayFont release];
     [_dayFont release];
     [_lunarDayFont release];
-    [_textColor release];
+    
+    [_captionTextColor release];
     [_weekdayTextColor release];
     [_weekendTextColor release];
     [_currentMonthDayColor release];
     [_notCurrentMonthDayColor release];
     [_todayHighlightColor release];
     [_festivalTextColor release];
+    [_solarTermTextColor release];
+    [_eventHintColor release];
     
     [_backgroundImage release];
     
     [super dealloc];
 }
 
-- (NSDateComponents *)dateComponents {
-    return [[_dateComponents retain] autorelease];
-}
-
-- (void)setDateComponents:(NSDateComponents *)dateComponents {
-    [_dateComponents release];
-    _dateComponents = [dateComponents copy];
-    
-    [self prepareDates];
+- (void)setDateAttributes:(NSArray *)attributes {
+    [[attributes retain] autorelease];
+    [_dateAttributes release];
+    _dateAttributes = [attributes copy];
     
     [self setNeedsDisplay];
 }
 
-- (void)prepareDates {
-    // Empty.
+- (NSArray *)dateAttributes {
+    return [[_dateAttributes retain] autorelease];
 }
 
-- (NSDictionary *)datesAttributesForDateComponents:(NSDateComponents *)comp {
-    LunarDate lunar = lunardate_from_solar(comp.year, comp.month, comp.day);
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:8];
-    [dict setObject:comp forKey:kTLDatesAttributeKeyDate];
-    NSString *lunarDesc = [NSString stringWithCString:(lunar.day == 1 ? lunardate_month(lunar.month) : lunardate_day(lunar.day))
-                                             encoding:NSUTF8StringEncoding];
-    [dict setObject:lunarDesc forKey:kTLDatesAttributeKeyLunarDate];
-    
-    int solar = solarterm_index(comp.year, comp.month, comp.day);
-    if (solar >= 0 && solar < 24) {
-        [dict setObject:[NSString stringWithCString:solarterm_name(solar) encoding:NSUTF8StringEncoding]
-                 forKey:kTLDatesAttributeKeySolarTerm];
+- (void)setEvents:(NSDictionary *)events {
+    if (_events != events) {
+        [_events release];
+        _events = [events copy];
+        
+        [self setNeedsDisplay];
     }
+}
 
-    NSString *fest = [_dataSource widgetView:self chineseFestivalForDateComponents:comp];
-    if (fest) {
-        [dict setObject:fest forKey:kTLDatesAttributeKeyFestivalSolar];
-    }
-    fest = [_dataSource widgetView:self lunarFestivalForDate:lunar];
-    if (fest) {
-        [dict setObject:fest forKey:kTLDatesAttributeKeyFestivalLunar];
-    }
-    
-    return [dict autorelease];
+- (NSDictionary *)events {
+    return [[_events retain] autorelease];
 }
 
 - (BOOL)containsDateComponents:(NSDateComponents *)comp {
@@ -150,6 +132,8 @@ NSString * const kTLDatesAttributeKeyFestivalLunar = @"fest.lunar";
         } else {
             if (festival) {
                 color = _festivalTextColor.CGColor;
+            } else if ([attributes objectForKey:kTLDatesAttributeKeySolarTerm]) {
+                color = _solarTermTextColor.CGColor;
             } else {
                 if (comp.weekday == 7 || comp.weekday == 1) {
                     color = _weekendTextColor.CGColor;

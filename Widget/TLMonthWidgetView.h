@@ -22,6 +22,6 @@ typedef enum {
 + (CGFloat)minHeightForStyle:(TLMonthWidgetViewStyle)style fullColumns:(BOOL)full;
 
 @property (nonatomic, assign) TLMonthWidgetViewStyle style;
-@property (nonatomic, assign) int rowCount;
+@property (nonatomic, assign) NSUInteger rowCount;
 
 @end

@@ -5,17 +5,19 @@ SUBPROJECTS = Preference
 
 BUNDLE_NAME = LunarCalendarWidget
 LunarCalendarWidget_FILES = LunarCalendarWidgetController.m \
-														../Common/NSCalendarAdditons.m \
-														../Common/NSDateComponentsAdditions.m \
-														../Common/lunardate.c \
-														../Common/solarterm.c \
-														../Common/TLCalendarScrollView.m \
-														../Common/TLFestivalsManager.m \
-														TLLunarCalendarWeeView.m \
-														TLMonthWidgetView.m \
-														TLWeekWidgetView.m \
-														TLDayWidgetView.m \
-														TLWidgetView.m
+							../Common/NSCalendarAdditons.m \
+							../Common/NSDateComponentsAdditions.m \
+							../Common/lunardate.c \
+							../Common/solarterm.c \
+							../Common/TLCalendarScrollView.m \
+							../Common/TLFestivalsManager.m \
+							../Common/TLPreferences.m \
+							../Common/TLCalendarDisplayAttributeKeys.m \
+							TLLunarCalendarWeeView.m \
+							TLMonthWidgetView.m \
+							TLWeekWidgetView.m \
+							TLDayWidgetView.m \
+							TLWidgetView.m
 LunarCalendarWidget_INSTALL_PATH = /Library/WeeLoader/Plugins/
 LunarCalendarWidget_FRAMEWORKS = UIKit CoreGraphics
 

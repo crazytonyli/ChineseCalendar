@@ -21,7 +21,7 @@ const char *chinese_dizhi[12];
 LunarDate lunardate_from_solar(int year, int month, int day) {
     LunarDate lunar;
     
-    lunar.isLeap = lunar.month == ((LunarCalendarTable[year - 1901] & 0xF00000) >> 20);
+    lunar.isLeap = month == ((LunarCalendarTable[year - 1901] & 0xF00000) >> 20);
     
     int Spring_NY,Sun_NY,StaticDayCount;
     int index,flag;

@@ -9,21 +9,6 @@
 #import <UIKit/UIKit.h>
 #include "../Common/lunardate.h"
 
-@class TLWidgetView;
-
-@protocol TLWidgetViewDataSource <NSObject>
-
-- (NSString *)widgetView:(TLWidgetView *)view lunarFestivalForDate:(LunarDate)date;
-- (NSString *)widgetView:(TLWidgetView *)view chineseFestivalForDateComponents:(NSDateComponents *)comp;
-
-@end
-
-extern NSString * const kTLDatesAttributeKeyDate;
-extern NSString * const kTLDatesAttributeKeyLunarDate;
-extern NSString * const kTLDatesAttributeKeySolarTerm;
-extern NSString * const kTLDatesAttributeKeyFestivalSolar;
-extern NSString * const kTLDatesAttributeKeyFestivalLunar;
-
 @interface TLWidgetView : UIView {
     @package
     UIFont *_captionFont;
@@ -31,7 +16,8 @@ extern NSString * const kTLDatesAttributeKeyFestivalLunar;
     UIFont *_dayFont;
     UIFont *_lunarDayFont;
     
-    UIColor *_textColor;
+//    UIColor *_textColor;
+    UIColor *_captionTextColor;
     UIColor *_weekdayTextColor;
     UIColor *_weekendTextColor;
     UIColor *_currentMonthDayColor;
@@ -41,15 +27,16 @@ extern NSString * const kTLDatesAttributeKeyFestivalLunar;
     
     NSCalendar *_calendar;
     NSDateComponents *_dateComponents;
+    NSDictionary *_events;
     
-    NSMutableDictionary *_dates;
+    NSArray *_dateAttributes;
     
     UIImage *_backgroundImage;
 }
 
-@property (assign) id<TLWidgetViewDataSource> dataSource;
-
 @property (nonatomic, copy) NSDateComponents *dateComponents;
+@property (nonatomic, copy) NSArray *dateAttributes;
+@property (nonatomic, copy) NSDictionary *events;
 
 @property (nonatomic, retain) UIImage *backgroundImage;
 
@@ -57,17 +44,16 @@ extern NSString * const kTLDatesAttributeKeyFestivalLunar;
 @property (nonatomic, retain) UIFont *weekdayFont;
 @property (nonatomic, retain) UIFont *dayFont;
 @property (nonatomic, retain) UIFont *lunarDayFont;
-@property (nonatomic, retain) UIColor *textColor;
+
+@property (nonatomic, retain) UIColor *captionTextColor;
 @property (nonatomic, retain) UIColor *weekdayTextColor;
 @property (nonatomic, retain) UIColor *weekendTextColor;
 @property (nonatomic, retain) UIColor *currentMonthDayColor;
 @property (nonatomic, retain) UIColor *notCurrentMonthDayColor;
 @property (nonatomic, retain) UIColor *todayHighlightColor;
 @property (nonatomic, retain) UIColor *festivalTextColor;
-
-- (void)prepareDates;
-
-- (NSDictionary *)datesAttributesForDateComponents:(NSDateComponents *)comp;
+@property (nonatomic, retain) UIColor *solarTermTextColor;
+@property (nonatomic, retain) UIColor *eventHintColor;
 
 - (BOOL)containsDateComponents:(NSDateComponents *)comp;
 
@@ -78,5 +64,7 @@ extern NSString * const kTLDatesAttributeKeyFestivalLunar;
                            context:(CGContextRef)ctx;
 
 - (NSString *)detailForAttribute:(NSDictionary *)attributes;
+
+- (void)setEvents:(NSDictionary *)events;
 
 @end

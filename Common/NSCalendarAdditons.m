@@ -22,15 +22,14 @@
     return sCalendar;
 }
 
-- (NSArray *)chineseWeekdaysWithPrefix:(NSString *)prefix {
+- (NSArray *)chineseWeekdays {
     NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:7];
-//    static const NSString *WEEKDAYS[7] = { @"周日", @"周一", @"周二", @"周三", @"周四", @"周五", @"周六" };
-    static const NSString *WEEKDAYS[7] = { @"日", @"一", @"二", @"三", @"四", @"五", @"六" };
+    static const NSString *WEEKDAYS[7] = { @"周日", @"周一", @"周二", @"周三", @"周四", @"周五", @"周六" };
     for (int index = [self firstWeekday] - 1; index < 7; index++) {
-        [array addObject:[NSString stringWithFormat:@"%@%@", prefix, WEEKDAYS[index]]];
+        [array addObject:WEEKDAYS[index]];
     }
     for (int i = 0; i < [self firstWeekday] - 1; i++) {
-        [array addObject:[NSString stringWithFormat:@"%@%@", prefix, WEEKDAYS[i]]];
+        [array addObject:WEEKDAYS[i]];
     }
     return [array autorelease];
 }

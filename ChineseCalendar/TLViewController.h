@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class TLLunarCalendarWeeView;
+#import "BBWeeAppController-Protocol.h"
 
 @interface TLViewController : UIViewController {
-    TLLunarCalendarWeeView *view;
+    id<BBWeeAppController> _weeAppController;
 }
 
 @end

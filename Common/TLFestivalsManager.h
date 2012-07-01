@@ -8,11 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TLFestivalsManager : NSObject
+@interface TLFestivalsManager : NSObject {
+    NSDictionary *_chineseFestivals;
+    NSDictionary *_lunarFestivals;
+    NSDictionary *_westernFestivals;
+}
 
 + (TLFestivalsManager *)sharedInstance;
 
 - (NSDictionary *)chineseFestivals;
 - (NSDictionary *)lunarFestivals;
+- (NSDictionary *)westernFestivals;
 
 @end

@@ -3,7 +3,6 @@
 #import "TLWeekWidgetView.h"
 #import "TLDayWidgetView.h"
 #import "../Common/NSCalendarAdditons.h"
-#import "../Common/TLFestivalsManager.h"
 
 @interface TLLunarCalendarWeeView(/*PrivateMethod*/)
 
@@ -75,8 +74,6 @@
     }
     if (_calScrollView == nil) {
         _calScrollView = [[TLCalendarScrollView alloc] initWithFrame:self.bounds views:nil];
-        _calScrollView.chineseFestivals = [[TLFestivalsManager sharedInstance] chineseFestivals];
-        _calScrollView.lunarFestivals = [[TLFestivalsManager sharedInstance] lunarFestivals];
         [self addSubview:_calScrollView];
         [self applyViewType];
     }
@@ -86,7 +83,7 @@
 
 - (void)handleDoubleTap:(UITapGestureRecognizer *)tap {
     if (tap.state == UIGestureRecognizerStateEnded) {
-        [_calScrollView displayCurrentDateWithAnimation:YES];
+        [_calScrollView displayDate:[NSDate date] animated:YES];
     }
 }
 
@@ -94,7 +91,7 @@
 
 - (UIImage *)backgroundImage {
     if (_bgImage == nil) {
-        UIImage *bgImg = [UIImage imageWithContentsOfFile:@"/System/Library/WeeAppPlugins/StocksWeeApp.bundle/WeeAppBackground.png"];
+        UIImage *bgImg = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:([[UIScreen mainScreen] scale] == 2.0 ? @"wee_bg@2x" : @"wee_bg") ofType:@"png"]];
         _bgImage = [[bgImg stretchableImageWithLeftCapWidth:floorf(bgImg.size.width / 2.f) topCapHeight:floorf(bgImg.size.height / 2.f)] retain];
     }
     return _bgImage;

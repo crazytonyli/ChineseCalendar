@@ -13,6 +13,12 @@
 - (void)setDateComponents:(NSDateComponents *)comp;
 - (NSDateComponents *)dateComponents;
 
+- (void)setDateAttributes:(NSArray *)attributes;
+- (NSArray *)dateAttributes;
+
+- (void)setEvents:(NSDictionary *)dictionary;
+- (NSDictionary *)events;
+
 - (NSDateComponents *)previousDateComponents;
 - (NSDateComponents *)nextDateComponents;
 
@@ -21,5 +27,10 @@
 - (NSComparisonResult)compareWithDateComponents:(NSDateComponents *)target;
 
 - (NSCalendarUnit)calendarUnit;
+
+- (NSDateComponents *)firstDay;
+- (NSInteger)numberOfDays;
+
+- (NSUInteger)dayIndexAtPoint:(CGPoint)point;
 
 @end

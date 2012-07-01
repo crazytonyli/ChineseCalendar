@@ -38,7 +38,7 @@
     if ([_dateComponents isSameDayWithComponents:[self dateComponentsForCurrentDate]]) {
         CGContextSetFillColorWithColor(ctx, _todayHighlightColor.CGColor);
     } else {
-        CGContextSetFillColorWithColor(ctx, _textColor.CGColor);
+        CGContextSetFillColorWithColor(ctx, _currentMonthDayColor.CGColor);
     }
     
     const NSString *weekdays[7] = { @"星期日", @"星期一", @"星期二", @"星期三", @"星期四", @"星期五", @"星期六" };
@@ -116,6 +116,18 @@
 
 - (NSCalendarUnit)calendarUnit {
     return NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
+}
+
+- (NSDateComponents *)firstDay {
+    return [[_dateComponents copy] autorelease];
+}
+
+- (NSInteger)numberOfDays {
+    return 1;
+}
+
+- (NSUInteger)dayIndexAtPoint:(CGPoint)point {
+    return 0;
 }
 
 @end

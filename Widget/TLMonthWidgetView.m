@@ -10,12 +10,14 @@
 #import "../Common/lunardate.h"
 #import "../Common/NSDateComponentsAdditions.h"
 #import "../Common/NSCalendarAdditons.h"
+#import "../Common/TLCalendarDisplayAttributeKeys.h"
 
-int maxdaysofmonth(int year, int month);
+#define CALENDAR_UNIT (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit)
 
 @implementation TLMonthWidgetView
 
-@synthesize style=_style, rowCount=_rowCount;
+@synthesize style=_style;
+@synthesize rowCount=_rowCount;
 
 + (CGFloat)minHeightForStyle:(TLMonthWidgetViewStyle)style fullColumns:(BOOL)full {
     CGFloat height = 0;
@@ -32,10 +34,6 @@ int maxdaysofmonth(int year, int month);
     return height;
 }
 
-+ (CGSize)minSize {
-    return CGSizeMake(316.0f, 110.0f);
-}
-
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -45,44 +43,6 @@ int maxdaysofmonth(int year, int month);
         _rowCount = 6;
     }
     return self;
-}
-
-- (void)prepareDates {
-    const static NSCalendarUnit unit = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit);
-    
-    // info about first days of month
-    NSDateComponents *comp = [_dateComponents copy];
-    comp.day = 1;
-    NSDate *firstDayOfMonth = [_calendar dateFromComponents:comp];
-    NSDateComponents *firstDayOfMonthComp = [_calendar components:unit fromDate:firstDayOfMonth];
-    [comp release];
-    
-    // info about first cell in TLMonthView
-    NSDateComponents *c = [[NSDateComponents alloc] init];
-    c.day = [_calendar firstWeekday] - firstDayOfMonthComp.weekday;
-    if (c.day > 0) {
-        c.day = c.day - 7;
-    }
-    NSDate *firstDayInView = [_calendar dateByAddingComponents:c toDate:firstDayOfMonth options:0];
-    [c release];
-    
-    // columns of TLMonthView
-    if (_dates == nil) {
-        _dates = [[NSMutableDictionary alloc] initWithCapacity:(7 * _rowCount)];
-    } else {
-        [_dates removeAllObjects];
-    }
-    
-    const static NSTimeInterval DAY_INTERVAL = 24 * 60 * 60;
-    
-    for (int row = 0; row < 7; row++) {
-        for (int col = 0; col < _rowCount; col++) {
-            NSDate *date = [NSDate dateWithTimeInterval:(DAY_INTERVAL * (row + col * 7)) sinceDate:firstDayInView];
-            NSUInteger indexes[2] = {row, col};
-            [_dates setObject:[self datesAttributesForDateComponents:[_calendar components:unit fromDate:date]]
-                       forKey:[NSIndexPath indexPathWithIndexes:indexes length:2]];
-        }
-    }
 }
 
 - (BOOL)containsDateComponents:(NSDateComponents *)comp {
@@ -97,10 +57,10 @@ int maxdaysofmonth(int year, int month);
     CGSize size = self.bounds.size;
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(ctx, _textColor.CGColor);
     CGContextSetShadowWithColor(ctx, CGSizeMake(0, 1), 0, [UIColor blackColor].CGColor);
     
     // draw year/month
+    CGContextSetFillColorWithColor(ctx, _captionTextColor.CGColor);
     NSString *text = [NSString stringWithFormat:@"%d年%d月", _dateComponents.year, _dateComponents.month];
     CGRect capRect = CGRectMake(0, 0, size.width, _captionFont.lineHeight);
     [text drawInRect:capRect
@@ -108,10 +68,10 @@ int maxdaysofmonth(int year, int month);
        lineBreakMode:UILineBreakModeClip
            alignment:UITextAlignmentCenter];
     
-    NSArray *weekdays = [_calendar chineseWeekdaysWithPrefix:@"周"];
+    NSArray *weekdays = [_calendar chineseWeekdays];
     CGRect weekdayRect;
     weekdayRect.size = CGSizeMake(_dayCellSize.width, _weekdayFont.lineHeight);
-    weekdayRect.origin.y = CGRectGetMaxY(capRect);
+    weekdayRect.origin = CGPointMake(0, CGRectGetMaxY(capRect));
     CGFloat x = (size.width - weekdayRect.size.width * 7) / 2;
     
     // draw day cells
@@ -122,8 +82,7 @@ int maxdaysofmonth(int year, int month);
         for (int col = 0; col < _rowCount; col++) {
             CGFloat colX = x + row * weekdayRect.size.width;
             CGFloat colY = y + col * _dayCellSize.height;
-            NSUInteger indexes[2] = { row, col };
-            NSDictionary *dict = [_dates objectForKey:[NSIndexPath indexPathWithIndexes:indexes length:2]];
+            NSDictionary *dict = [_dateAttributes objectAtIndex:(row + col * 7)];
             NSDateComponents *comp = [dict objectForKey:kTLDatesAttributeKeyDate];
             
             if (col == 0) {
@@ -171,6 +130,12 @@ int maxdaysofmonth(int year, int month);
                 CGContextAddLines(ctx, points, 2);
                 CGContextStrokePath(ctx);
             }
+            
+            if ([_events objectForKey:comp]) {
+                CGContextSetFillColorWithColor(ctx, self.eventHintColor.CGColor);
+                CGContextAddEllipseInRect(ctx, CGRectMake(CGRectGetMaxX(dayRect) + lunarDayRect.size.width + 2, CGRectGetMinY(dayRect) + 2, 4, 4));
+                CGContextFillPath(ctx);
+            }
         }
     }
 }
@@ -179,10 +144,10 @@ int maxdaysofmonth(int year, int month);
     CGSize size = self.bounds.size;
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(ctx, _textColor.CGColor);
     CGContextSetShadowWithColor(ctx, CGSizeMake(0, 1), 0, [UIColor blackColor].CGColor);
     
     // draw year/month
+    CGContextSetFillColorWithColor(ctx, _captionTextColor.CGColor);
     NSString *text = [NSString stringWithFormat:@"%d年%d月", _dateComponents.year, _dateComponents.month];
     CGRect capRect = CGRectMake(0, 0, size.width, _captionFont.lineHeight);
     [text drawInRect:capRect
@@ -190,7 +155,7 @@ int maxdaysofmonth(int year, int month);
        lineBreakMode:UILineBreakModeClip
            alignment:UITextAlignmentCenter];
     
-    NSArray *weekdays = [_calendar chineseWeekdaysWithPrefix:@"周"];
+    NSArray *weekdays = [_calendar chineseWeekdays];
     CGRect weekdayRect;
     weekdayRect.size = _dayCellSize;
     CGFloat x = (size.width - weekdayRect.size.width * 7) / 2;
@@ -202,8 +167,7 @@ int maxdaysofmonth(int year, int month);
     for (int row = 0; row < 7; row++) {
         for (int col = 0; col < _rowCount; col++) {
             weekdayRect.origin = CGPointMake(x + row * weekdayRect.size.width, y + col * weekdayRect.size.height);
-            NSUInteger indexes[2] = { row, col };
-            NSDictionary *dict = [_dates objectForKey:[NSIndexPath indexPathWithIndexes:indexes length:2]];
+            NSDictionary *dict = [_dateAttributes objectAtIndex:(row + col * 7)];
             NSDateComponents *comp = [dict objectForKey:kTLDatesAttributeKeyDate];
             
             if (col == 0) {
@@ -226,10 +190,10 @@ int maxdaysofmonth(int year, int month);
             
             // draw day
             NSString *dayString = [NSString stringWithFormat:@"%d", comp.day];
-            CGRect dayRect = CGRectMake(weekdayRect.origin.x,
-                                        CGRectGetMidY(weekdayRect) - _dayFont.lineHeight,
-                                        weekdayRect.size.width,
-                                        _dayFont.lineHeight);
+            CGRect dayRect;
+            dayRect.size = [dayString sizeWithFont:_dayFont forWidth:weekdayRect.size.width lineBreakMode:UILineBreakModeClip];
+            dayRect.origin = CGPointMake(weekdayRect.origin.x + roundf((weekdayRect.size.width - dayRect.size.width) / 2),
+                                         CGRectGetMidY(weekdayRect) - dayRect.size.height);
             [dayString drawInRect:dayRect
                          withFont:_dayFont
                     lineBreakMode:UILineBreakModeClip
@@ -238,11 +202,9 @@ int maxdaysofmonth(int year, int month);
             if ([todayComps isSameDayWithComponents:comp]) {
                 // draw underline.
                 CGContextSetLineWidth(ctx, 1.0f);
-                CGSize size = [dayString sizeWithFont:_dayFont forWidth:dayRect.size.width lineBreakMode:UILineBreakModeClip];
-                CGFloat y = CGRectGetMaxY(dayRect);
                 CGPoint points[2] = {
-                    CGPointMake(dayRect.origin.x + roundf((dayRect.size.width - size.width) / 2), y),
-                    CGPointMake(CGRectGetMaxX(dayRect) - roundf((dayRect.size.width - size.width) / 2), y)
+                    CGPointMake(dayRect.origin.x, CGRectGetMaxY(dayRect)),
+                    CGPointMake(CGRectGetMaxX(dayRect), CGRectGetMaxY(dayRect))
                 };
                 CGContextAddLines(ctx, points, 2);
                 CGContextStrokePath(ctx);
@@ -258,6 +220,12 @@ int maxdaysofmonth(int year, int month);
                               withFont:_lunarDayFont
                          lineBreakMode:UILineBreakModeClip
                              alignment:UITextAlignmentCenter];
+            
+            if ([_events objectForKey:comp]) {
+                CGContextSetFillColorWithColor(ctx, self.eventHintColor.CGColor);
+                CGContextAddEllipseInRect(ctx, CGRectMake(CGRectGetMaxX(dayRect) + 2, CGRectGetMinY(dayRect) + 2, 4, 4));
+                CGContextFillPath(ctx);
+            }
         }
     }
 }
@@ -303,7 +271,7 @@ int maxdaysofmonth(int year, int month);
 #pragma mark - TLCalendarDisplay protocol
 
 - (NSDateComponents *)dateComponentsForCurrentDate {
-    NSDateComponents *comp = [_calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit) fromDate:[NSDate date]];
+    NSDateComponents *comp = [_calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:[NSDate date]];
     comp.day = 1;
     return comp;
 }
@@ -312,7 +280,7 @@ int maxdaysofmonth(int year, int month);
     NSDate *currentMonth = [_calendar dateFromComponents:[self dateComponents]];
     NSDateComponents *diff = [[[NSDateComponents alloc] init] autorelease];
     diff.month = -1;
-    return [_calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit)
+    return [_calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit)
                         fromDate:[_calendar dateByAddingComponents:diff toDate:currentMonth options:0]];
 }
 
@@ -320,7 +288,7 @@ int maxdaysofmonth(int year, int month);
     NSDate *currentMonth = [_calendar dateFromComponents:[self dateComponents]];
     NSDateComponents *diff = [[[NSDateComponents alloc] init] autorelease];
     diff.month = 1;
-    return [_calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit)
+    return [_calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit)
                         fromDate:[_calendar dateByAddingComponents:diff toDate:currentMonth options:0]];
 }
 
@@ -343,28 +311,49 @@ int maxdaysofmonth(int year, int month);
 }
 
 - (NSCalendarUnit)calendarUnit {
-    return (NSYearCalendarUnit | NSMonthCalendarUnit);
+    return CALENDAR_UNIT;
+}
+
+- (NSDateComponents *)firstDay {
+    NSDateComponents *comp = [_dateComponents copy];
+    comp.day = 1;
+    NSDate *firstDayOfMonth = [_calendar dateFromComponents:comp];
+    NSDateComponents *firstDayOfMonthComp = [_calendar components:CALENDAR_UNIT fromDate:firstDayOfMonth];
+    [comp release];
+    
+    // info about first cell in TLMonthView
+    NSDateComponents *diff = [[NSDateComponents alloc] init];
+    diff.day = [_calendar firstWeekday] - firstDayOfMonthComp.weekday;
+    if (diff.day > 0) {
+        diff.day = diff.day - 7;
+    }
+    NSDate *firstDayInView = [_calendar dateByAddingComponents:diff toDate:firstDayOfMonth options:0];
+    [diff release];
+    
+    return [_calendar components:CALENDAR_UNIT fromDate:firstDayInView];;
+}
+
+- (NSInteger)numberOfDays {
+    return _rowCount * 7;
+}
+
+- (NSUInteger)dayIndexAtPoint:(CGPoint)point {
+    CGFloat minY = _captionFont.lineHeight + _weekdayFont.lineHeight;
+    CGFloat weekWidth = _dayCellSize.width * 7;
+    if (point.x < (self.bounds.size.width - weekWidth) / 2
+        || point.x > (self.bounds.size.width + weekWidth) / 2
+        || point.y < minY
+        ) {
+        return NSNotFound;
+    }
+    
+    int row = (int)floorf((point.y - minY) / _dayCellSize.height);
+    int col = (int)floorf((point.x - ((self.bounds.size.width - weekWidth) / 2)) / _dayCellSize.width);
+    if (row >= 0 && row < _rowCount && col >= 0 && col < 7) {
+        return col + row * 7;
+    } else {
+        return NSNotFound;
+    }
 }
 
 @end
-
-int maxdaysofmonth(int year, int month) {
-    const static BOOL LEAP_MONTH[12] = { 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1 };
-    
-    int maxDay;
-    if (LEAP_MONTH[month - 1]) {
-        maxDay = 31;
-    } else {
-        if (month == 2) {
-            int year = year;
-            if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
-                maxDay = 29;
-            } else {
-                maxDay = 30;
-            }
-        } else {
-            maxDay = 30;
-        }
-    }
-    return maxDay;
-}
