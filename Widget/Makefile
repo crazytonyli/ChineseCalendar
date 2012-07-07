@@ -25,5 +25,8 @@ LunarCalendarWidget_FRAMEWORKS = UIKit CoreGraphics
 include $(THEOS_MAKE_PATH)/bundle.mk
 include $(THEOS_MAKE_PATH)/aggregate.mk
 
+before-install::
+	install.exec "apt-get remove -y com.crazytonyli.chinesecalendarpro"
+
 after-install::
-	 install.exec "killall -9 SpringBoard"
+	install.exec "killall -9 SpringBoard"
