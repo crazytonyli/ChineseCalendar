@@ -138,21 +138,21 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>支持</string>
+			<string>升级</string>
 		</dict>
+        <dict>
+            <key>cell</key>
+            <string>PSLinkCell</string>
+            <key>label</key>
+            <string>Pro版有哪些新功能？</string>
+            <key>detail</key>
+            <string>LCWPIntroductionController</string>
+        </dict>
 		<dict>
 			<key>cell</key>
-			<string>PSButtonCell</string>
+			<string>PSListItemCell</string>
 			<key>label</key>
-			<string>通过支付宝捐赠</string>
-			<key>action</key>
-			<string>donate</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSButtonCell</string>
-			<key>label</key>
-			<string>购买Pro版</string>
+			<string>升级至Pro版</string>
 			<key>action</key>
 			<string>buyPro</string>
 		</dict>

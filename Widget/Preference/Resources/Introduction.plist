@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>✓ 更多可定制的内容：字体颜色、是否显示节假日等；</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>✓ 与系统日历程序进行交互：进入某日、查看某日的事件安排；</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+            <string>✓ 日期选择：创意十足的交互，方便的操作，使用手势选择日期并跳转；</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+            <string>✓ 以及...以后即将加入的更多方便好用的功能！</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+            <string>如果您决定升级到Pro版，希望您能支持正版。是使用两瓶可乐半包烟钱的正版，还是使用会伤害您四五千块钱手机的盗版，由您选择。</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>Pro版功能简介</string>
+</dict>
+</plist>
