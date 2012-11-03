@@ -26,7 +26,7 @@ include $(THEOS_MAKE_PATH)/bundle.mk
 include $(THEOS_MAKE_PATH)/aggregate.mk
 
 before-install::
-	install.exec "apt-get remove -y com.crazytonyli.chinesecalendarpro"
+	install.exec "dpkg -r com.crazytonyli.chinesecalendarpro"
 
 after-install::
 	install.exec "killall -9 SpringBoard"

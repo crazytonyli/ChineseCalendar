@@ -152,9 +152,17 @@
 			<key>cell</key>
 			<string>PSListItemCell</string>
 			<key>label</key>
-			<string>升级至Pro版</string>
+			<string>从淘宝购买</string>
 			<key>action</key>
-			<string>buyPro</string>
+			<string>buyViaTaobao</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSListItemCell</string>
+			<key>label</key>
+			<string>从Cydia购买</string>
+			<key>action</key>
+			<string>buyViaCydia</string>
 		</dict>
 		<dict>
 			<key>cell</key>
