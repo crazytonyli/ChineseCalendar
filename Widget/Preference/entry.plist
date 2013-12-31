@@ -3,7 +3,7 @@
 		bundle = "LunarCalendarWidgetPreference";
 		cell = PSLinkCell;
 		detail = LCWPListController;
-		icon = "/Library/WeeLoader/Plugins/LunarCalendarWidget.bundle/Icon-Small@2x.png";
+		icon = "/System/Library/WeeAppPlugins/LunarCalendarWidget.bundle/Icon-Small@2x.png";
 		isController = 1;
 		label = "\U4e2d\U56fd\U519c\U5386";
 	};

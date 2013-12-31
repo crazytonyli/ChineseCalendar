@@ -272,9 +272,20 @@
     
     const NSTimeInterval DAY_INTERVAL = 24 * 60 * 60;
     NSInteger days = [display numberOfDays];
-    NSDate *start = [_calendar dateFromComponents:[display firstDay]];
+    NSDate *date = nil;
     for (NSInteger i = 0; i < days; i++) {
-        NSDate *date = [NSDate dateWithTimeInterval:(DAY_INTERVAL * i) sinceDate:start];
+        NSDate *now = date == nil ? [_calendar dateFromComponents:[display firstDay]] : [NSDate dateWithTimeInterval:DAY_INTERVAL sinceDate:date];
+        if (date) {
+            NSTimeInterval offset = [_calendar.timeZone daylightSavingTimeOffsetForDate:date] - [_calendar.timeZone daylightSavingTimeOffsetForDate:now];
+            if (offset != 0) {
+                date = [now dateByAddingTimeInterval:offset];
+            } else {
+                date = now;
+            }
+        } else {
+            date = now;
+        }
+
         NSDateComponents *day = [_calendar components:[display calendarUnit] fromDate:date];
         
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:8];

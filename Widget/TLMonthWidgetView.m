@@ -11,6 +11,7 @@
 #import "../Common/NSDateComponentsAdditions.h"
 #import "../Common/NSCalendarAdditons.h"
 #import "../Common/TLCalendarDisplayAttributeKeys.h"
+#import "Common.h"
 
 #define CALENDAR_UNIT (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit)
 
@@ -57,7 +58,9 @@
     CGSize size = self.bounds.size;
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextSetShadowWithColor(ctx, CGSizeMake(0, 1), 0, [UIColor blackColor].CGColor);
+    if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
+        CGContextSetShadowWithColor(ctx, CGSizeMake(0, 1), 0, [UIColor blackColor].CGColor);
+    }
     
     // draw year/month
     CGContextSetFillColorWithColor(ctx, _captionTextColor.CGColor);
@@ -144,7 +147,9 @@
     CGSize size = self.bounds.size;
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextSetShadowWithColor(ctx, CGSizeMake(0, 1), 0, [UIColor blackColor].CGColor);
+    if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
+        CGContextSetShadowWithColor(ctx, CGSizeMake(0, 1), 0, [UIColor blackColor].CGColor);
+    }
     
     // draw year/month
     CGContextSetFillColorWithColor(ctx, _captionTextColor.CGColor);

@@ -9,7 +9,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
+	<key>CFBundleExecutable</key>
+	<string>LunarCalendarWidget</string>
 	<key>CFBundleDisplayName</key>
 	<string>LunarCalendarWidget</string>
 	<key>MinimumOSVersion</key>
@@ -33,5 +35,10 @@
 	</array>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+	<key>SBUIWidgetViewControllers</key>
+	<dict>
+		<key>SBUIWidgetIdiomNotificationCenterToday</key>
+		<string>TLCCWidgetViewController</string>
+	</dict>
 </dict>
 </plist>

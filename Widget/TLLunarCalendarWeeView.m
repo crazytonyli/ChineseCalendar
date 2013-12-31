@@ -3,6 +3,7 @@
 #import "TLWeekWidgetView.h"
 #import "TLDayWidgetView.h"
 #import "../Common/NSCalendarAdditons.h"
+#import "Common.h"
 
 @interface TLLunarCalendarWeeView(/*PrivateMethod*/)
 
@@ -90,7 +91,7 @@
 #pragma mark - Private methods
 
 - (UIImage *)backgroundImage {
-    if (_bgImage == nil) {
+    if (_bgImage == nil && SYSTEM_VERSION_LESS_THAN(@"7.0")) {
         UIImage *bgImg = [UIImage imageWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:([[UIScreen mainScreen] scale] == 2.0 ? @"wee_bg@2x" : @"wee_bg") ofType:@"png"]];
         _bgImage = [[bgImg stretchableImageWithLeftCapWidth:floorf(bgImg.size.width / 2.f) topCapHeight:floorf(bgImg.size.height / 2.f)] retain];
     }

@@ -10,6 +10,7 @@
 #import "../Common/NSCalendarAdditons.h"
 #import "../Common/NSDateComponentsAdditions.h"
 #import "../Common/lunardate.h"
+#import "Common.h"
 
 @implementation TLDayWidgetView
 
@@ -33,7 +34,10 @@
     [_backgroundImage drawInRect:CGRectInset(self.bounds, 2.0f, 0)];
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextSetShadowWithColor(ctx, CGSizeMake(0, 1), 0, [UIColor blackColor].CGColor);
+
+    if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
+        CGContextSetShadowWithColor(ctx, CGSizeMake(0, 1), 0, [UIColor blackColor].CGColor);
+    }
     
     if ([_dateComponents isSameDayWithComponents:[self dateComponentsForCurrentDate]]) {
         CGContextSetFillColorWithColor(ctx, _todayHighlightColor.CGColor);

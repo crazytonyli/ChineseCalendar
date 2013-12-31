@@ -19,10 +19,10 @@
     [super setPreferenceValue:value specifier:specifier];
     NSString *key = [specifier propertyForKey:@"key"];
     if (key) {
-        static NSString *DOMAIN = @"tonyli.lunarcalendar.widget";
-        NSMutableDictionary *pref = [NSMutableDictionary dictionaryWithDictionary:[[self userDefaults] persistentDomainForName:DOMAIN]];
+        static NSString *APP_DOMAIN = @"tonyli.lunarcalendar.widget";
+        NSMutableDictionary *pref = [NSMutableDictionary dictionaryWithDictionary:[[self userDefaults] persistentDomainForName:APP_DOMAIN]];
         [pref setObject:value forKey:key];
-        [_userDefaults setPersistentDomain:pref forName:DOMAIN];
+        [_userDefaults setPersistentDomain:pref forName:APP_DOMAIN];
         [_userDefaults synchronize];
     }
 }

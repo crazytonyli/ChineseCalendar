@@ -14,7 +14,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>✓ 与系统日历程序进行交互：进入某日、查看某日的事件安排；</string>
+			<string>✓ 日程显示：直接在日历中查看日程安排信息，无需进入系统日历；</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -26,20 +26,13 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-            <string>✓ 日历界面直接切换视图，轻松在各个视图之间切换；</string>
+            <string>✓ 三击切换视图：轻松在各个视图之间切换；</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
             <string>✓ 以及...以后即将加入的更多方便好用的功能！</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>footerText</key>
-            <string>如果您决定升级到Pro版，请您支持正版！
-是使用两瓶可乐半包烟钱的正版，还是使用会伤害您四五千块钱手机的盗版，由您选择。</string>
 		</dict>
 	</array>
 	<key>title</key>

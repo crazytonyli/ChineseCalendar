@@ -1,4 +1,4 @@
-#import "BBWeeAppController-Protocol.h"
+#import "LunarCalendarWidgetController.h"
 #import "TLMonthWidgetView.h"
 #import "TLWeekWidgetView.h"
 #import "TLDayWidgetView.h"
@@ -20,24 +20,8 @@
 - (id)listView;
 @end
 
-@interface LunarCalendarWidgetController: NSObject <BBWeeAppController> {
-	TLLunarCalendarWeeView *_view;
-}
-
-@property (nonatomic, readonly) UIView *view;
-
-- (CGFloat)viewWidth;
-
-- (void)displayView;
-
-@end
 
 @implementation LunarCalendarWidgetController
-
-- (id)init {
-	if((self = [super init]) != nil) {
-	} return self;
-}
 
 - (void)dealloc {
 	[_view release];
@@ -104,7 +88,7 @@
     }
 }
 
-- (float)viewHeight {
+- (CGFloat)viewHeight {
     CGFloat height = 71.0f;
     switch (TLPreferecneIntForKey(@"viewType", TLLunarCalendarWeeViewMonthType)) {
         case TLLunarCalendarWeeViewDayType:
