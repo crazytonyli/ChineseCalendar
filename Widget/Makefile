@@ -7,7 +7,7 @@ GO_EASY_ON_ME = 1
 THEOS = /opt/theos
 
 # IP address of target device
-THEOS_DEVICE_IP = 192.168.5.11
+THEOS_DEVICE_IP = 192.168.0.103
 
 include $(THEOS)/makefiles/common.mk
 
