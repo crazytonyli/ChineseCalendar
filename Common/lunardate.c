@@ -103,7 +103,7 @@ LunarDate lunardate_from_solar(int year, int month, int day) {
         }
         day = StaticDayCount - Spring_NY + 1;
         
-        lunar.year = year - 1;
+        lunar.year = year;
     }
     
     lunar.day = day;
