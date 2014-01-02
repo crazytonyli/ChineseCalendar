@@ -26,7 +26,7 @@
 #pragma mark - Getters
 
 - (NSString *)widgetVersion {
-    return @"1.1.1";
+    return @"1.1.2";
 }
 
 - (NSString *)username {
@@ -45,9 +45,7 @@
 #pragma mark - Actions
 
 - (void)feedback {
-    NSString *url = [NSString stringWithFormat:@"mailto:crazygemini.lee@gmail.com?subject=Chinese Calendar Feedback (Version: %@)", [self widgetVersion]];
-    url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"cydia://package/tonyli.lunarcalendar.widget"]];
 }
 
 - (void)donate {
