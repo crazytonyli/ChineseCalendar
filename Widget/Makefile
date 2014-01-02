@@ -6,12 +6,9 @@ GO_EASY_ON_ME = 1
 # Path to theos
 THEOS = /opt/theos
 
-# IP address of target device
-THEOS_DEVICE_IP = 192.168.0.103
-
 include $(THEOS)/makefiles/common.mk
 
-SUBPROJECTS = Preference
+SUBPROJECTS = Preference BBFix
 
 BUNDLE_NAME = LunarCalendarWidget
 LunarCalendarWidget_FILES = LunarCalendarWidgetController.m \
